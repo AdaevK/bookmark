@@ -1,0 +1,14 @@
+.idea
+bookmarks.iml
+
+# vim artifacts
+**.swp
+*.swo
+*.swn
+*~
+
+# Node modules
+node_modules
+npm-debug.log
+webpack-assets.json
+webpack-assets-manifest.json
