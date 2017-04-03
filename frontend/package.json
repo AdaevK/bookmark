@@ -1,0 +1,45 @@
+{
+  "name": "bookmarks",
+  "version": "1.0.0",
+  "description": "Bookmark frontend application",
+  "main": "index.js",
+  "scripts": {
+    "start": "node_modules/.bin/webpack-dev-server --config server_config.js",
+    "build:dev": "webpack -v -config development.config.js --display-chunk --debug",
+    "build:production": "NODE_ENV=production webpack -v --config production.config.js --display-chunk"
+  },
+  "author": "Kirill Adaev",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-react": "^6.23.0",
+    "babel-preset-stage-0": "^6.22.0",
+    "babel-preset-stage-1": "^6.22.0",
+    "css-loader": "^0.28.0",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "file-loader": "^0.11.1",
+    "node-sass": "^4.5.2",
+    "react-hot-loader": "^3.0.0-beta.6",
+    "redux-devtools": "^3.3.2",
+    "resolve-url-loader": "^2.0.2",
+    "sass-loader": "^6.0.3",
+    "style-loader": "^0.16.1",
+    "webpack": "^2.3.3",
+    "webpack-dev-server": "^2.4.2"
+  },
+  "dependencies": {
+    "axios": "^0.16.0",
+    "bootstrap-sass": "^3.3.7",
+    "font-awesome": "^4.7.0",
+    "numeral": "^2.0.6",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-redux": "^5.0.3",
+    "react-router": "^4.0.0",
+    "react-select": "^1.0.0-rc.3",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.2.0"
+  }
+}
