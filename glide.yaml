@@ -1,0 +1,6 @@
+package: bitbucket.org/kirill_adaev/bookmarks
+import:
+- package: github.com/gin-gonic/gin
+  version: ^1.1.4
+- package: gopkg.in/yaml.v2
+- package: github.com/gin-gonic/contrib

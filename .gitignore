@@ -1,6 +1,9 @@
 .idea
 bookmarks.iml
 
+build/
+vendor/
+
 # vim artifacts
 **.swp
 *.swo
