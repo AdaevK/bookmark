@@ -18,6 +18,10 @@ func main() {
 		panic(err)
 	}
 
+	if err := app.Config.LoadKey("secret.yml"); err != nil {
+		panic(err)
+	}
+
 	if err := app.Run(); err != nil {
 		panic(err)
 	}
