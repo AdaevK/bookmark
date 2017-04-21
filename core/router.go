@@ -7,4 +7,9 @@ import (
 
 func createRoutes(router *gin.Engine) {
 	router.GET("/", controllers.MainIndex)
+
+	dashboard := router.Group("/dashboard")
+	{
+		dashboard.GET("/", controllers.DashboardIndex)
+	}
 }

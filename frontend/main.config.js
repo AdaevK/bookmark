@@ -5,11 +5,14 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   context: __dirname,
-  entry: ['./js/application.js', './css/application.scss' ],
+  entry: {
+    landing: ['./js/landing/application.js', './css/landing/application.scss' ],
+    dashboard: ['./js/dashboard/application.js', './css/dashboard/application.scss' ],
+  },
   output: {
     path: path.resolve(__dirname, '../build/assets'),
-    filename: 'application.js',
-    library: 'application'
+    filename: '[name].js',
+    library: '[name]'
   },
   resolve: {
     extensions: ['.js', '.jsx'],

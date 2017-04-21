@@ -4,5 +4,5 @@ const webpack = require('webpack'),
 let config = model.exports = require('./main.config.js');
 
 config.output = _.merge(config.output, {
-  filename: 'application-[hash].js'
+  filename: '[name]-[hash].js'
 })

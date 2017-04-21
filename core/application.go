@@ -7,8 +7,13 @@ type Application struct {
 }
 
 func (a *Application) Run() error {
-	router := gin.Default()
-	router.LoadHTMLGlob("../app/views/*")
+	router := gin.New()
+	router.Use(gin.Logger(), gin.Recovery())
+
+	render := NewRender()
+	render.AddFromFiles("main/index", "layouts/landing.tmpl", "main/index.tmpl")
+	render.AddFromFiles("dashboard/index", "layouts/dashboard.tmpl", "dashboard/index.tmpl")
+	router.HTMLRender = render
 
 	createRoutes(router)
 

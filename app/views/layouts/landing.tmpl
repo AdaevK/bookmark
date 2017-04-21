@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <title>{{ .title }}</title>
+        <script type="text/javascript" src="http://localhost:8080/assets/landing.js"></script>
+        <link rel="stylesheet" type="text/css" href="http://localhost:8080/assets/landing.css"/>
+    </head>
+    <body>
+       <nav class="navbar navbar-default navbar-fixed-top">
+           <div class="container">
+               <div class="navbar-header">
+                   <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                       <span class="sr-only">Toggle navigation</span>
+                       <span class="icon-bar"></span>
+                       <span class="icon-bar"></span>
+                       <span class="icon-bar"></span>
+                   </button>
+                   <a class="navbar-brand" href="/">Bookmarks</a>
+               </div>
+               <div id="navbar" class="navbar-collapse collapse">
+                   <ul class="nav navbar-nav pull-right">
+                       <li><a href="/login">Войти</a></li>
+                   </ul>
+               </div>
+           </div>
+       </nav>
+       <div id="content-wrapper">
+           <div class="container">
+               <div class="row">
+                   {{ template "context" . }}
+               </div>
+           </div>
+       </div>
+    </body>
+</html>

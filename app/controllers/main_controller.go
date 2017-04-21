@@ -6,7 +6,7 @@ import (
 )
 
 func MainIndex(c *gin.Context) {
-	c.HTML(http.StatusOK, "layout.tmpl", gin.H{
+	c.HTML(http.StatusOK, "main/index", gin.H{
 		"title": "Bookmarks Application",
 	})
 }

@@ -16,7 +16,7 @@ config.plugins.push(
       devtool: 'inline-source-map'
     }),
     new ExtractTextPlugin({
-      filename: 'application.css',
+      filename: '[name].css',
       allChunks: true
     }),
     new webpack.HotModuleReplacementPlugin(),
