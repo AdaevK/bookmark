@@ -1,7 +1,7 @@
 import React from 'react'
 
 const App = (props) => (
-    <div> Header </div>
+    <h1> Application </h1>
 )
 
 export default App

@@ -10,6 +10,6 @@ func createRoutes(c *controllers.Controller, router *gin.Engine) {
 
 	dashboard := router.Group("/dashboard")
 	{
-		dashboard.GET("/", c.DashboardIndex)
+		dashboard.GET("*action", c.DashboardIndex)
 	}
 }
