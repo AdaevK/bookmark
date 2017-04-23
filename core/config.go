@@ -3,6 +3,9 @@ package core
 import (
 	"io/ioutil"
 	"gopkg.in/yaml.v2"
+
+	"database/sql"
+	_ "github.com/lib/pq"
 )
 
 type Base struct {
@@ -12,10 +15,10 @@ type Base struct {
 }
 
 type Database struct {
-	Host     string `yaml:"host"`
-	User     string `yaml:"user"`
-	Password string `yaml:"password"`
-	Name     string `yaml:"name"`
+	DBHost     string `yaml:"host"`
+	DBUser     string `yaml:"user"`
+	DBPassword string `yaml:"password"`
+	DBName     string `yaml:"name"`
 }
 
 type Config struct {
@@ -38,4 +41,16 @@ func (config *Config)LoadKey(filename string) (err error) {
 		return
 	}
 	return
+}
+
+func (config *Config)LoadDB() (*sql.DB, error) {
+	db, err := sql.Open("postgres", "user="+config.DBUser+" password='"+config.DBPassword+"' host="+config.DBHost+" dbname="+config.DBName)
+	if err != nil {
+		return nil, err
+	}
+	if err = db.Ping(); err != nil {
+		return nil, err
+	}
+
+	return db, nil
 }

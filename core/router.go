@@ -5,11 +5,11 @@ import (
 	"bitbucket.org/kirill_adaev/bookmarks/app/controllers"
 )
 
-func createRoutes(router *gin.Engine) {
-	router.GET("/", controllers.MainIndex)
+func createRoutes(c *controllers.Controller, router *gin.Engine) {
+	router.GET("/", c.MainIndex)
 
 	dashboard := router.Group("/dashboard")
 	{
-		dashboard.GET("/", controllers.DashboardIndex)
+		dashboard.GET("/", c.DashboardIndex)
 	}
 }
