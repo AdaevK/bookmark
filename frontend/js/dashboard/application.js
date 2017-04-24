@@ -10,6 +10,8 @@ import configureStore from './store/configure_store'
 
 import App from './containers/app'
 import Login from './containers/login'
+import Registration from './containers/registration'
+import NoMatch from './containers/no_match'
 
 const history = createHistory()
 const store = configureStore(history)
@@ -18,8 +20,10 @@ render((
       <Provider store={store} >
         <ConnectedRouter history={history}>
           <div>
-            <Route exact path="/dashboard" component={App}/>
-            <Route path="/dashboard/login" component={Login}/>
+            <Route exact path="/dashboard" component={App} />
+            <Route path="/login" component={Login} />
+            <Route path="/registration" component={Registration} />
+            <Route component={NoMatch} />
           </div>
         </ConnectedRouter>
       </Provider>
