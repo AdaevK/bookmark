@@ -2,29 +2,25 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 
-import { Route } from 'react-router'
-import { ConnectedRouter } from 'react-router-redux'
+import { BrowserRouter } from 'react-router-dom'
 import createHistory from 'history/createBrowserHistory'
+
+import { signInSuccess } from './actions/sessions'
 
 import configureStore from './store/configure_store'
 
 import App from './containers/app'
-import Login from './containers/login'
-import Registration from './containers/registration'
-import NoMatch from './containers/no_match'
 
-const history = createHistory()
-const store = configureStore(history)
+const store = configureStore()
+
+if(localStorage.getItem('bookmarksAuthToken') !== null){
+  store.dispatch(signInSuccess())
+}
 
 render((
+  <BrowserRouter>
       <Provider store={store} >
-        <ConnectedRouter history={history}>
-          <div>
-            <Route exact path="/dashboard" component={App} />
-            <Route path="/login" component={Login} />
-            <Route path="/registration" component={Registration} />
-            <Route component={NoMatch} />
-          </div>
-        </ConnectedRouter>
+        <App />
       </Provider>
+  </BrowserRouter>
 ), document.getElementById('app'))

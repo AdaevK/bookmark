@@ -26,6 +26,9 @@ module.exports = _.merge(config, {
     noInfo: false,
     quiet: false,
     lazy: false,
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+    },
     stats: {
       colors: true,
       hash: false,

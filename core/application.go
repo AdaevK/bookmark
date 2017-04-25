@@ -3,7 +3,6 @@ package core
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/contrib/sessions"
-	"bitbucket.org/kirill_adaev/bookmarks/app/controllers"
 )
 
 type Application struct {
@@ -19,14 +18,14 @@ func (a *Application) Run() error {
 	store := sessions.NewCookieStore([]byte(a.Config.SecretKey))
 
 	router := gin.New()
+
+	router.Use(setDatabase(db))
 	router.Use(gin.Logger(), gin.Recovery())
 	router.Use(sessions.Sessions(a.Config.SessionName, store))
+
 	router.HTMLRender = loadTemplates()
 
-	contr := &controllers.Controller{
-		DB: db,
-	}
-	createRoutes(contr, router)
+	createRoutes(router)
 
 	router.Run(":" + a.Config.Port)
 	return nil

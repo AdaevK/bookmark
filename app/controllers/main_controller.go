@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func (contr *Controller)MainIndex(c *gin.Context) {
+func MainIndex(c *gin.Context) {
 	_, ok := c.Get("login")
 
 	if ok {
