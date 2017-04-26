@@ -3,6 +3,7 @@ package core
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/contrib/sessions"
+	"gopkg.in/go-playground/validator.v9"
 )
 
 type Application struct {
@@ -14,12 +15,13 @@ func (a *Application) Run() error {
 	if err != nil {
 		return err
 	}
+	validate := validator.New()
 
 	store := sessions.NewCookieStore([]byte(a.Config.SecretKey))
 
 	router := gin.New()
 
-	router.Use(setDatabase(db))
+	router.Use(setDatabase(db), setValidator(validate))
 	router.Use(gin.Logger(), gin.Recovery())
 	router.Use(sessions.Sessions(a.Config.SessionName, store))
 

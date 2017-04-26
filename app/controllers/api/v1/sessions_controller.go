@@ -5,39 +5,75 @@ import (
 	"net/http"
 	"database/sql"
 	"bitbucket.org/kirill_adaev/bookmarks/app/models"
-	"fmt"
+	"gopkg.in/go-playground/validator.v9"
 )
 
-type Session struct {
-	Email    string `form:"email" binding:"required"`
-	Password string `form:"password" binding:"required"`
+type SessionErrors struct {
+	Email    string `json:"email,omitempty"`
+	Password string `json:"password,omitempty"`
+	Common   string `json:"common,omitempty"`
 }
+
 type SessionForm struct {
-	Session Session `form:"session" binding:"required"`
+	c        *gin.Context
+	Email    string `form:"email" validate:"required,email"`
+	Password string `form:"password" validate:"required"`
+	Errors   SessionErrors
+}
+
+func (sf *SessionForm)setContext(c *gin.Context) {
+	sf.c = c
+}
+
+func (sf *SessionForm)IsValid() (bool) {
+	validate := sf.c.MustGet("Validator").(*validator.Validate)
+	se := validate.Struct(sf)
+	if se == nil {
+		return true
+	}
+	for _, err := range se.(validator.ValidationErrors) {
+		switch err.Field() {
+		case "Email":
+			sf.Errors.Email = err.Tag()
+		case "Password":
+			sf.Errors.Password = err.Tag()
+		}
+	}
+	return false
+}
+
+func (sf *SessionForm)Exec() (bool) {
+	db := sf.c.MustGet("DB").(*sql.DB)
+
+	var u models.User
+	row := db.QueryRow("SELECT id, email, encrypted_password FROM users WHERE email = $1", sf.Email)
+
+	if err := row.Scan(&u.Id, &u.Email, &u.EncryptedPassword); err != nil {
+		panic(err)
+	}
+
+	if u.EncryptedPassword == sf.Password {
+		return true
+	} else {
+		sf.Errors.Common = "invalid_email_or_password"
+		return false
+	}
+}
+
+type SessionFormParams struct {
+	Session SessionForm `form:"session" binding:"required"`
 }
 
 func SessionCreate(c *gin.Context){
-	db := c.MustGet("DB").(*sql.DB)
-
-	var u models.User
-	var form SessionForm
-
-	if c.Bind(&form) == nil {
-		fmt.Println(form.Session.Email, form.Session.Password)
-
-		row := db.QueryRow("SELECT id, email, encrypted_password FROM users WHERE email = $1", form.Session.Email)
-
-		if err := row.Scan(&u.Id, &u.Email, &u.EncryptedPassword); err != nil {
-			panic(err)
-		}
-
-		if u.EncryptedPassword == form.Session.Password {
+	var params SessionFormParams
+	if err := c.Bind(&params); err == nil {
+		sessionForm := params.Session
+		sessionForm.setContext(c)
+		if sessionForm.IsValid() && sessionForm.Exec() {
 			c.JSON(http.StatusOK, gin.H{"jwt": "test"})
 		} else {
-			c.JSON(http.StatusUnprocessableEntity, gin.H{"errors": "Неверный логин или пароль!"})
+			c.JSON(http.StatusUnprocessableEntity, gin.H{"errors": sessionForm.Errors})
 		}
-	} else {
-		c.JSON(http.StatusUnprocessableEntity, gin.H{"errors": "Неверный логин или пароль!"})
 	}
 }
 

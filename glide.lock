@@ -1,5 +1,5 @@
-hash: 7dc4b2c91a7e77068d71c2c965e5bb10b527b75230ab6299ffdbe2058d7978f9
-updated: 2017-04-21T19:52:35.375752977+07:00
+hash: 33b85d0170d0c224a6a1c713d78a5be5bae59f354ab00e094c4893941bd95347
+updated: 2017-04-26T00:37:22.156923985+07:00
 imports:
 - name: github.com/boj/redistore
   version: 4562487a4bee9a7c272b72bfaeda4917d0a47ab9
@@ -17,6 +17,12 @@ imports:
   subpackages:
   - binding
   - render
+- name: github.com/go-playground/locales
+  version: 1e5f1161c6416a5ff48840eb8724a394e48cc534
+  subpackages:
+  - currency
+- name: github.com/go-playground/universal-translator
+  version: 71201497bace774495daed26a3874fd339e0b538
 - name: github.com/golang/protobuf
   version: 2402d76f3d41f928c7902a765dfc872356dd3aad
   subpackages:
@@ -29,6 +35,8 @@ imports:
   version: ba78acc856fe7c79891d516131b3d903cc8d9367
 - name: github.com/lib/pq
   version: 2704adc878c21e1329f46f6e56a1c387d788ff94
+  subpackages:
+  - oid
 - name: github.com/manucorporat/sse
   version: ee05b128a739a0fb76c7ebd3ae4810c1de808d6d
 - name: github.com/mattn/go-isatty
@@ -43,6 +51,8 @@ imports:
   - unix
 - name: gopkg.in/go-playground/validator.v8
   version: c193cecd124b5cc722d7ee5538e945bdb3348435
+- name: gopkg.in/go-playground/validator.v9
+  version: 6d8c18553ea1ac493d049edd6f102f52e618f085
 - name: gopkg.in/yaml.v2
   version: a3f3340b5840cee44f372bddb5880fcbc419b46a
 testImports: []
