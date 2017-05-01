@@ -9,9 +9,9 @@ import (
 )
 
 type SessionErrors struct {
+	Common   string `json:"common,omitempty"`
 	Email    string `json:"email,omitempty"`
 	Password string `json:"password,omitempty"`
-	Common   string `json:"common,omitempty"`
 }
 
 type SessionForm struct {
@@ -42,8 +42,12 @@ func (sf *SessionForm)IsValid() (bool) {
 	return false
 }
 
-func (sf *SessionForm)Exec() (bool) {
+func (sf *SessionForm)Call() (bool) {
 	db := sf.c.MustGet("DB").(*sql.DB)
+
+	if !sf.IsValid() {
+		return false
+	}
 
 	var u models.User
 	row := db.QueryRow("SELECT id, email, encrypted_password FROM users WHERE email = $1", sf.Email)
@@ -69,7 +73,7 @@ func SessionCreate(c *gin.Context){
 	if err := c.Bind(&params); err == nil {
 		sessionForm := params.Session
 		sessionForm.setContext(c)
-		if sessionForm.IsValid() && sessionForm.Exec() {
+		if sessionForm.Call() {
 			c.JSON(http.StatusOK, gin.H{"jwt": "test"})
 		} else {
 			c.JSON(http.StatusUnprocessableEntity, gin.H{"errors": sessionForm.Errors})
