@@ -1,9 +1,10 @@
-package core
+package web
 
 import (
 	"html/template"
 	"github.com/gin-gonic/gin/render"
 )
+//TODO: Вынести templateDir
 const (
 	templateDir = "../app/views/"
 )

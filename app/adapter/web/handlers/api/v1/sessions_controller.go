@@ -3,10 +3,13 @@ package v1
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"database/sql"
-	"bitbucket.org/kirill_adaev/bookmarks/app/models"
 	"gopkg.in/go-playground/validator.v9"
+	"bookmarks/app/engine"
 )
+
+type SessionHandler struct {
+	engine.Controller
+}
 
 type SessionErrors struct {
 	Common   string `json:"common,omitempty"`
@@ -15,19 +18,14 @@ type SessionErrors struct {
 }
 
 type SessionForm struct {
-	c        *gin.Context
+	engine.Controller
 	Email    string `form:"email" validate:"required,email"`
 	Password string `form:"password" validate:"required"`
 	Errors   SessionErrors
 }
 
-func (sf *SessionForm)setContext(c *gin.Context) {
-	sf.c = c
-}
-
 func (sf *SessionForm)IsValid() (bool) {
-	validate := sf.c.MustGet("Validator").(*validator.Validate)
-	se := validate.Struct(sf)
+	se := sf.Validate.Struct(sf)
 	if se == nil {
 		return true
 	}
@@ -43,20 +41,17 @@ func (sf *SessionForm)IsValid() (bool) {
 }
 
 func (sf *SessionForm)Call() (bool) {
-	db := sf.c.MustGet("DB").(*sql.DB)
 
 	if !sf.IsValid() {
 		return false
 	}
 
-	var u models.User
-	row := db.QueryRow("SELECT id, email, encrypted_password FROM users WHERE email = $1", sf.Email)
-
-	if err := row.Scan(&u.Id, &u.Email, &u.EncryptedPassword); err != nil {
+	_, password, err := sf.Repo.GetUserRepository().FindByEmailAndGetPassword(sf.Email)
+	if err != nil {
 		panic(err)
 	}
 
-	if u.EncryptedPassword == sf.Password {
+	if *password == sf.Password {
 		return true
 	} else {
 		sf.Errors.Common = "invalid_email_or_password"
@@ -68,11 +63,11 @@ type SessionFormParams struct {
 	Session SessionForm `form:"session" binding:"required"`
 }
 
-func SessionCreate(c *gin.Context){
+func (sh *SessionHandler)Create(c *gin.Context){
 	var params SessionFormParams
 	if err := c.Bind(&params); err == nil {
 		sessionForm := params.Session
-		sessionForm.setContext(c)
+		sessionForm.Controller = sh.Controller
 		if sessionForm.Call() {
 			c.JSON(http.StatusOK, gin.H{"jwt": "test"})
 		} else {
@@ -81,6 +76,6 @@ func SessionCreate(c *gin.Context){
 	}
 }
 
-func SessionDelete(c *gin.Context) {
+func (sh *SessionHandler)Delete(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{})
 }

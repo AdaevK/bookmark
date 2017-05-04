@@ -1,6 +1,8 @@
 CREATE TABLE users (
   id serial NOT NULL,
   email character varying NOT NULL DEFAULT ''::character varying,
+  first_name character varying,
+  last_name character varying,
   encrypted_password character varying NOT NULL DEFAULT ''::character varying,
   created_at timestamp without time zone NOT NULL,
   updated_at timestamp without time zone NOT NULL,

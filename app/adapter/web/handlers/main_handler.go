@@ -1,11 +1,16 @@
-package controllers
+package handlers
 
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"bookmarks/app/engine"
 )
 
-func MainIndex(c *gin.Context) {
+type MainHandler struct {
+	engine.Controller
+}
+
+func (mh *MainHandler)Index(c *gin.Context) {
 	_, ok := c.Get("login")
 
 	if ok {

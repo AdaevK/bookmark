@@ -1,11 +1,8 @@
-package core
+package engine
 
 import (
 	"io/ioutil"
 	"gopkg.in/yaml.v2"
-
-	"database/sql"
-	_ "github.com/lib/pq"
 )
 
 type Base struct {
@@ -22,8 +19,9 @@ type Database struct {
 }
 
 type Config struct {
-	Base             `yaml:"base"`
-	Database         `yaml:"database"`
+	Base      Base       `yaml:"base"`
+	Database  Database   `yaml:"database"`
+	Env       string     `yaml:"environment"`
 	SecretKey []byte
 }
 
@@ -36,21 +34,17 @@ func LoadConfig(filename string) (config Config, err error) {
 	return
 }
 
-func (config *Config)LoadKey(filename string) (err error) {
-	if config.SecretKey, err = ioutil.ReadFile(filename); err != nil {
+func (c *Config)LoadKey(filename string) (err error) {
+	if c.SecretKey, err = ioutil.ReadFile(filename); err != nil {
 		return
 	}
 	return
 }
 
-func (config *Config)LoadDB() (*sql.DB, error) {
-	db, err := sql.Open("postgres", "user="+config.DBUser+" password='"+config.DBPassword+"' host="+config.DBHost+" dbname="+config.DBName)
-	if err != nil {
-		return nil, err
-	}
-	if err = db.Ping(); err != nil {
-		return nil, err
-	}
+func (c *Config)ServerAddress() (string) {
+	return ":" + c.Base.Port
+}
 
-	return db, nil
+func (c *Config)IsProduction() (bool) {
+	return c.Env == "production"
 }
