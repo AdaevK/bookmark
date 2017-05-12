@@ -5,6 +5,7 @@ import (
 	"gopkg.in/go-playground/validator.v9"
 
 	"bookmarks/app/domain"
+	"bookmarks/app/usecases"
 )
 
 type Repositories interface {
@@ -12,14 +13,14 @@ type Repositories interface {
 }
 
 type Engine struct {
-	Config   Config
-	Cntr     Controller
-	Router   http.Handler
+	Config     Config
+	Router     http.Handler
+	Interactor *Interactors
+	Validate   *validator.Validate
 }
 
-type Controller struct {
-	Repo     Repositories
-	Validate *validator.Validate
+type Interactors struct {
+	SessionInteractor usecases.SessionInteractor
 }
 
 func (a *Engine) RunServer() {

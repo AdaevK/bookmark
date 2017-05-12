@@ -33,7 +33,11 @@ export const login = (email, password) => {
 
 export const logout = () => {
   return dispatch => {
-    return request.delete('/api/v1/sessions')
+    return request.delete('/api/v1/sessions', {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('bookmarksAuthToken')}`
+        }
+      })
       .then((response) => {
         localStorage.removeItem('bookmarksAuthToken')
         dispatch(userSignOut())

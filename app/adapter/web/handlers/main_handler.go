@@ -3,17 +3,16 @@ package handlers
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"bookmarks/app/engine"
+	"github.com/gin-gonic/contrib/sessions"
 )
 
-type MainHandler struct {
-	engine.Controller
-}
+type MainHandler struct {}
 
 func (mh *MainHandler)Index(c *gin.Context) {
-	_, ok := c.Get("login")
+	session := sessions.Default(c)
+	value := session.Get("login")
 
-	if ok {
+	if value != nil && value.(string) == "logged_in" {
 		c.Redirect(http.StatusTemporaryRedirect, "/dashboard")
 	} else {
 		c.HTML(http.StatusOK, "main/index", gin.H{

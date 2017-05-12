@@ -5,6 +5,7 @@ import (
 	"bookmarks/app/adapter/web"
 	"bookmarks/app/engine"
 	"gopkg.in/go-playground/validator.v9"
+	"bookmarks/app/usecases"
 )
 
 func NewApplication(configPath, secretPath string) (app *engine.Engine, err error) {
@@ -17,12 +18,18 @@ func NewApplication(configPath, secretPath string) (app *engine.Engine, err erro
 		return
 	}
 
-	app.Cntr.Repo, err = postgresql.NewDatabase(app.Config.Database)
+	var repo engine.Repositories
+	repo, err = postgresql.NewDatabase(app.Config.Database)
 	if err != nil {
 		return
 	}
 
-	app.Cntr.Validate = validator.New()
+	app.Validate = validator.New()
+
+	userRepository := repo.GetUserRepository()
+
+	app.Interactor = new(engine.Interactors)
+	app.Interactor.SessionInteractor = usecases.SessionInteractor{app.Config.SecretKey, userRepository}
 
 	app.Router = web.NewWebAdapter(app)
 
