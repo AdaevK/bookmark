@@ -1,0 +1,10 @@
+environment: development
+base:
+  port:
+  session_name:
+  debug: true
+database:
+  host:
+  user:
+  password:
+  name:

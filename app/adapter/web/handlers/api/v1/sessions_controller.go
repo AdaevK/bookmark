@@ -5,34 +5,30 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/contrib/sessions"
-	"gopkg.in/go-playground/validator.v9"
 
 	"bookmarks/app/engine"
-	"bookmarks/app/adapter/web/forms"
+	"bookmarks/app/usecases"
 )
 
 type SessionHandler struct {
 	Interactors *engine.Interactors
-	Validate    *validator.Validate
 }
 
 type SessionFormParams struct {
-	Session forms.SessionForm `form:"session" binding:"required"`
+	Session usecases.Session `json:"session" binding:"required"`
 }
 
 func (sh *SessionHandler)Create(c *gin.Context){
 	var params SessionFormParams
-	if err := c.Bind(&params); err == nil {
-		sessionForm := params.Session
-		sessionForm.Interactors = sh.Interactors
-		sessionForm.Validate = sh.Validate
-		if sessionForm.Call() {
+	if err := c.BindJSON(&params); err == nil {
+		jwt, ok := sh.Interactors.SessionInteractor.Authenticate(&params.Session)
+		if ok {
 			session := sessions.Default(c)
 			session.Set("login",  "logged_in")
 			session.Save()
-			c.JSON(http.StatusOK, gin.H{"jwt": sessionForm.Jwt})
+			c.JSON(http.StatusOK, gin.H{"jwt": jwt})
 		} else {
-			c.JSON(http.StatusUnprocessableEntity, gin.H{"errors": sessionForm.Errors})
+			c.JSON(http.StatusUnprocessableEntity, gin.H{"errors": params.Session.Errors})
 		}
 	}
 }

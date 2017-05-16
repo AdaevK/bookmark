@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
-import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { I18n } from 'react-redux-i18n'
 
 import FormGroupWithError from './form_group_with_error'
@@ -9,8 +8,6 @@ import FormGroupWithError from './form_group_with_error'
 class SignInForm extends React.Component {
   handleSubmit(e) {
     e.preventDefault()
-    const history  = this.props.history
-
     const email    = this.refs.email.value
     const password = this.refs.password.value
 
@@ -37,7 +34,7 @@ class SignInForm extends React.Component {
           <div className="col-xs-12">
             <div className="input-group">
               <span className="input-group-addon"><i className="fa fa-user"></i></span>
-              <input type="text" className="form-control" placeholder={I18n.t('sign_in_form.fields.email')} ref="email" disabled={submitting} />
+              <input type="email" className="form-control" placeholder={I18n.t('sign_in_form.fields.email')} ref="email" disabled={submitting} />
             </div>
           </div>
         </FormGroupWithError>
@@ -54,6 +51,11 @@ class SignInForm extends React.Component {
             <button type="submit" className="btn btn-lg btn-primary btn-block" disabled={submitting}>
               {I18n.t('sign_in_form.page.submit')}
             </button>
+          </div>
+        </div>
+        <div className="form-group">
+          <div className="text-center">
+            <Link to="/registration">{I18n.t('sign_in_form.page.sign_up_link')}</Link>
           </div>
         </div>
       </form>

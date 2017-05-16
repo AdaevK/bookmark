@@ -1,10 +1,12 @@
 import request from 'axios'
 import {
+  SIGN_IN_REQUEST,
   SIGN_IN_SUCCESS,
   SIGN_IN_FAILURE,
   USER_SIGN_OUT
 } from '../constants/action_types'
 
+const signInRequest = () => ({type: SIGN_IN_REQUEST})
 export const signInSuccess = (currentUser) => ({type: SIGN_IN_SUCCESS, currentUser})
 const signInFailure = (errors) => ({type: SIGN_IN_FAILURE, errors})
 const userSignOut   = () => ({type: USER_SIGN_OUT})
@@ -18,6 +20,7 @@ export const login = (email, password) => {
       }
     }
 
+    dispatch(signInRequest())
     request.post('/api/v1/sessions', data)
       .then((response) => {
         localStorage.setItem('bookmarksAuthToken', response.data.jwt)
@@ -25,7 +28,7 @@ export const login = (email, password) => {
       })
       .catch((error) => {
         console.log(error)
-        const { data, status } = error.response
+        const { data } = error.response
         dispatch(signInFailure(data.errors))
       })
   }

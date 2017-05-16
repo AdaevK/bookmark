@@ -1,13 +1,12 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import { connect } from 'react-redux'
 
 import Header from '../components/header'
 import PrivateRoute from '../components/private_route'
 
 import Home from './home'
 import SignInPage from './sign_in_page'
-import Registration from './registration'
+import SignUpPage from './sign_up_page'
 import NoMatch from './no_match'
 
 const App = (props) => (
@@ -20,7 +19,7 @@ const App = (props) => (
             <Switch>
               <PrivateRoute path="/dashboard" component={Home} />
               <Route path="/login" component={SignInPage} />
-              <Route path="/registration" component={Registration} />
+              <Route path="/registration" component={SignUpPage} />
               <Route component={NoMatch} />
             </Switch>
           </div>

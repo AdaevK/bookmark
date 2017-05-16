@@ -9,6 +9,26 @@ type userRepository struct {
 	db *sql.DB
 }
 
+func (ur *userRepository)CheckEmail(email string) (bool) {
+	var result bool
+	if err := ur.db.QueryRow("SELECT EXISTS(SELECT 1 FROM users WHERE email=$1)", email).Scan(&result); err != nil {
+		panic(err)
+	}
+
+	return !result
+}
+
+func (ur *userRepository)Create(u *domain.User, encryptedPassword string) (error) {
+	row := ur.db.QueryRow("INSERT INTO users(email, encrypted_password, first_name, last_name, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id",
+	  u.Email, encryptedPassword, u.FirstName, u.LastName, u.CreatedAt, u.UpdatedAt)
+
+	if err := row.Scan(&u.Id); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (ur *userRepository)FindById(id int) (*domain.User, error) {
 	var u domain.User
 	row := ur.db.QueryRow("SELECT id, email, first_name, last_name FROM users WHERE id = $1", id)

@@ -4,20 +4,32 @@ import (
 	jwt_lib "github.com/dgrijalva/jwt-go"
 	"bookmarks/app/domain"
 	"time"
+	"gopkg.in/go-playground/validator.v9"
 )
 
 type SessionInteractor struct {
 	SecretKey      []byte
+	Validate *validator.Validate
 	UserRepository domain.UserRepository
 }
 
-func (interactor *SessionInteractor) Authenticate(email, password string) (string, bool){
-	u, encPassword, err := interactor.UserRepository.FindByEmailAndGetPassword(email)
-	if err != nil {
-		return "", false
-	}
+type Session struct {
+	Email    string `json:"email" validate:"required,email"`
+	Password string `json:"password" validate:"required"`
+	Errors
+}
 
-	if *encPassword == password {
+func (interactor *SessionInteractor) Authenticate(session *Session) (string, bool){
+	ae := interactor.Validate.Struct(session)
+	session.Errors = make(Errors)
+
+	if ae == nil {
+		u, encPassword, err := interactor.UserRepository.FindByEmailAndGetPassword(session.Email)
+		if err != nil || *encPassword != session.Password {
+			session.Errors["common"] = "invalid_email_or_password"
+			return "", false
+		}
+
 		token := jwt_lib.New(jwt_lib.GetSigningMethod("HS256"))
 		token.Claims = jwt_lib.MapClaims{
 			"id":         u.Id,
@@ -30,8 +42,17 @@ func (interactor *SessionInteractor) Authenticate(email, password string) (strin
 		if err != nil {
 			panic("Could not generate token")
 		}
+
 		return jwt, true
-	}else{
+	} else {
+		for _, err := range ae.(validator.ValidationErrors) {
+			switch err.Field() {
+			case "Email":
+				session.Errors["email"] = err.Tag()
+			case "Password":
+				session.Errors["password"] = err.Tag()
+			}
+		}
 		return "", false
 	}
 }

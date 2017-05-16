@@ -1,4 +1,5 @@
 import {
+  SIGN_IN_REQUEST,
   SIGN_IN_SUCCESS,
   SIGN_IN_FAILURE,
   USER_SIGN_OUT
@@ -13,11 +14,17 @@ const initState = {
 
 const session = (state = initState, action) => {
   switch (action.type) {
+    case SIGN_IN_REQUEST:
+    return {
+      ...state,
+      submitting: true,
+      errors: null
+    }
   case SIGN_IN_SUCCESS:
     return {
       ...state,
       authenticated: true,
-      submitting: true,
+      submitting: false,
       currentUser: action.currentUser,
       errors: null
     }

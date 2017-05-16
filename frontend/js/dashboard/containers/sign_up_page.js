@@ -2,14 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { login } from '../actions/sessions'
 
-import SignInForm from '../components/sign_in_form'
+import SignUpForm from '../components/sign_up_form'
 
-const SignInPage = (props) => {
+const SignUpPage = (props) => {
   const { session } = props
   return !session.authenticated ? (
-    <SignInForm signIn={props.login} errors={session.errors} submitting={session.submitting} />
+    <SignUpForm/>
   ) : (
     <Redirect to={{
       pathname: '/dashboard'
@@ -17,16 +16,15 @@ const SignInPage = (props) => {
   )
 }
 
-SignInPage.propTypes = {
+SignUpPage.propTypes = {
   session: PropTypes.object.isRequired,
-  login: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {
   const { session } = state
   return {
-    session: session
+    session: session,
   }
 }
 
-export default withRouter(connect(mapStateToProps, { login })(SignInPage))
+export default withRouter(connect(mapStateToProps, {})(SignUpPage))

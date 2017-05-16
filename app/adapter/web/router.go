@@ -22,9 +22,12 @@ func createRoutes(r *gin.Engine, f *engine.Engine) {
 func apiV1(r *gin.RouterGroup, f *engine.Engine, endpoint string) {
 	v1 := r.Group(endpoint)
 	{
-		sessionHandler := api_v1.SessionHandler{f.Interactor, f.Validate}
+		sessionHandler := api_v1.SessionHandler{f.Interactor}
 		v1.POST("/sessions", sessionHandler.Create)
 		v1.DELETE("/sessions", jwtAuth(f.Config.SecretKey), sessionHandler.Delete)
+
+		registrationHandler := api_v1.RegistrationsHandler{f.Interactor}
+		v1.POST("/registrations", registrationHandler.Create)
 	}
 }
 
