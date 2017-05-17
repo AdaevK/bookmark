@@ -1,9 +1,10 @@
-import request from 'axios'
+import api from '../api'
 import {
   SIGN_UP_REQUEST,
   SIGN_UP_SUCCESS,
   SIGN_UP_FAILURE
 } from '../constants/action_types'
+import links from '../constants/links'
 
 const signUpRequest = () => ({type: SIGN_UP_REQUEST})
 const signUpSuccess = () => ({type: SIGN_UP_SUCCESS})
@@ -16,10 +17,10 @@ export const signUp = (user, history) => {
     }
 
     dispatch(signUpRequest())
-    request.post('/api/v1/registrations', data)
+    api.signUp(data)
       .then(() => {
         dispatch(signUpSuccess())
-        history.push('/login')
+        history.push(links.loginPath)
       })
       .catch((error) => {
         const { data } = error.response

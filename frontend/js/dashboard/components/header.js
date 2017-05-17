@@ -1,18 +1,20 @@
 import React from 'react'
-import { Link, withRouter } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logout } from '../actions/sessions'
+import links from '../constants/links'
 
 import Nav from './nav'
 import NavLink from './nav_link'
 import SignOutLink from './sign_out_link'
 
 const Header = (props) => (
-  <Nav isBrandLink={ props.session.authenticated }>
-    {props.session.authenticated ? (
+  <Nav isBrandLink={ props.authenticated }>
+    {props.authenticated ? (
         <div id="navbar" className="collapse navbar-collapse">
           <ul className="nav navbar-nav">
-            <NavLink to="/dashboard">Главная</NavLink>
+            <NavLink to={ links.dashboardPath }>Главная</NavLink>
           </ul>
           <ul className="nav navbar-nav pull-right">
             <SignOutLink signOut={ props.logout } />
@@ -23,10 +25,15 @@ const Header = (props) => (
   </Nav>
 )
 
+Header.propTypes = {
+  authenticated: PropTypes.bool.isRequired
+}
+
 const mapStateToProps = (state) => {
   const { session } = state
+  const { authenticated } = session
   return {
-    session: session
+    authenticated: authenticated
   }
 }
 

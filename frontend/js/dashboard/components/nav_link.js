@@ -3,10 +3,6 @@ import PropTypes from 'prop-types'
 import { matchPath } from 'react-router'
 import { Link } from 'react-router-dom'
 
-const contextTypes = {
-  router: PropTypes.object
-}
-
 class NavLink extends Component {
   render() {
     let isActive = false
@@ -27,6 +23,8 @@ class NavLink extends Component {
   }
 }
 
-NavLink.contextTypes = contextTypes;
+NavLink.propTypes = {
+  router: PropTypes.object
+}
 
-export default NavLink;
+export default NavLink

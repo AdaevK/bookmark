@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import links from '../constants/links'
 
 const Nav = (props) => (
   <nav className="navbar navbar-default navbar-fixed-top">
@@ -14,7 +15,7 @@ const Nav = (props) => (
         </button>
         */}
         { props.isBrandLink ? (
-              <Link to="/dashboard" className="navbar-brand">Bookmarks</Link>
+              <Link to={ links.dashboardPath } className="navbar-brand">Bookmarks</Link>
             ) : (
               <a href="/" className="navbar-brand">Bookmarks</a>
             )

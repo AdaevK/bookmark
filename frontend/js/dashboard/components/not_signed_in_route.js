@@ -1,24 +1,26 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Route, Redirect, withRouter } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
+
 import links from '../constants/links'
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
+const NotSignedInRoute = ({ component: Component, ...rest }) => {
   return (
     <Route {...rest} render={props => (
       rest.authenticated ? (
-        <Component {...props} />
-      ) : (
         <Redirect to={{
-          pathname: links.loginPath,
+          pathname: links.dashboardPath,
           state: { from: props.location }
         }}/>
+      ) : (
+        <Component {...props} />
       )
     )} />
-)}
+  )
+}
 
-PrivateRoute.propTypes = {
+NotSignedInRoute.propTypes = {
   authenticated: PropTypes.bool.isRequired
 }
 
@@ -30,4 +32,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps)(PrivateRoute))
+export default connect(mapStateToProps)(NotSignedInRoute)

@@ -1,4 +1,4 @@
-import request from 'axios'
+import api from '../api'
 import {
   SIGN_IN_REQUEST,
   SIGN_IN_SUCCESS,
@@ -21,7 +21,7 @@ export const login = (email, password) => {
     }
 
     dispatch(signInRequest())
-    request.post('/api/v1/sessions', data)
+    api.signIn(data)
       .then((response) => {
         localStorage.setItem('bookmarksAuthToken', response.data.jwt)
         dispatch(signInSuccess())
@@ -36,12 +36,8 @@ export const login = (email, password) => {
 
 export const logout = () => {
   return dispatch => {
-    return request.delete('/api/v1/sessions', {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('bookmarksAuthToken')}`
-        }
-      })
-      .then((response) => {
+    api.signOut()
+      .then(() => {
         localStorage.removeItem('bookmarksAuthToken')
         dispatch(userSignOut())
       })
