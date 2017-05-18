@@ -9,7 +9,7 @@ const initState = {
   errors: null
 }
 
-const registration = (state = initState, action) => {
+export default (state = initState, action) => {
   switch (action.type) {
     case SIGN_UP_REQUEST:
       return {
@@ -35,5 +35,3 @@ const registration = (state = initState, action) => {
     return state
   }
 }
-
-export default registration

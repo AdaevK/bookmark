@@ -28,9 +28,9 @@ func (fh *FoldersHandler)Create(c *gin.Context) {
 	var params FolderParams
 	if err := c.BindJSON(&params); err == nil {
 		params.Folder.UserId = int64(c.Keys["user_id"].(float64))
-		ok := fh.Interactors.FolderInteractor.Create(&params.Folder)
+		u, ok := fh.Interactors.FolderInteractor.Create(&params.Folder)
 		if ok {
-			c.JSON(http.StatusCreated, gin.H{})
+			c.JSON(http.StatusCreated, gin.H{"folder": u})
 		} else {
 			c.JSON(http.StatusUnprocessableEntity, gin.H{ "errors": params.Folder.Errors })
 		}

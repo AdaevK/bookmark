@@ -16,7 +16,7 @@ type Folder struct {
 	Errors
 }
 
-func (interactor *FolderInteractor)Create(f *Folder) (bool) {
+func (interactor *FolderInteractor)Create(f *Folder) (*domain.Folder, bool) {
 	fe := interactor.Validate.Struct(f)
 	if fe == nil {
 		folder := domain.Folder{
@@ -27,7 +27,7 @@ func (interactor *FolderInteractor)Create(f *Folder) (bool) {
 			panic(err)
 		}
 
-		return true
+		return &folder, true
 	} else {
 		f.Errors = make(Errors)
 		for _, err := range fe.(validator.ValidationErrors) {
@@ -39,6 +39,6 @@ func (interactor *FolderInteractor)Create(f *Folder) (bool) {
 			}
 		}
 
-		return false
+		return nil, false
 	}
 }

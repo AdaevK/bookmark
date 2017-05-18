@@ -12,7 +12,7 @@ const initState = {
   errors: null
 }
 
-const session = (state = initState, action) => {
+export default (state = initState, action) => {
   switch (action.type) {
     case SIGN_IN_REQUEST:
     return {
@@ -44,5 +44,3 @@ const session = (state = initState, action) => {
     return state
   }
 }
-
-export default session

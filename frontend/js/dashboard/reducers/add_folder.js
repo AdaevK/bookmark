@@ -1,7 +1,7 @@
 import {
-  NEW_FOLDER_REQUEST,
-  NEW_FOLDER_SUCCESS,
-  NEW_FOLDER_FAILURE
+  ADD_FOLDER_REQUEST,
+  ADD_FOLDER_SUCCESS,
+  ADD_FOLDER_FAILURE,
 } from '../constants/action_types'
 
 const initState = {
@@ -9,23 +9,23 @@ const initState = {
   errors: null
 }
 
-const newFolder = (state = initState, action) => {
+export default (state = initState, action) => {
   switch (action.type) {
-    case NEW_FOLDER_REQUEST:
+    case ADD_FOLDER_REQUEST:
       return {
         ...state,
         submitting: true,
         errors: null
       }
 
-    case NEW_FOLDER_SUCCESS:
+    case ADD_FOLDER_SUCCESS:
       return {
         ...state,
         submitting: false,
         errors: null
       }
 
-    case NEW_FOLDER_FAILURE:
+    case ADD_FOLDER_FAILURE:
       return {
         ...state,
         submitting: false,
@@ -36,5 +36,3 @@ const newFolder = (state = initState, action) => {
       return state
   }
 }
-
-export default newFolder

@@ -64,8 +64,8 @@ DashboardForm.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-  const { newFolder } = state
-  const { errors, submitting } = newFolder
+  const { addFolder } = state
+  const { errors, submitting } = addFolder
   return {
     errors,
     submitting

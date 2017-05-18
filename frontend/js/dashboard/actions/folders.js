@@ -1,17 +1,17 @@
 import api from '../api'
 import {
-  NEW_FOLDER_REQUEST,
-  NEW_FOLDER_SUCCESS,
-  NEW_FOLDER_FAILURE,
+  ADD_FOLDER_REQUEST,
+  ADD_FOLDER_SUCCESS,
+  ADD_FOLDER_FAILURE,
 
   LOAD_FOLDERS_REQUEST,
   LOAD_FOLDERS_SUCCESS,
   LOAD_FOLDERS_FAILURE,
 } from '../constants/action_types'
 
-const newFolderRequest = () => ({type: NEW_FOLDER_REQUEST})
-const newFolderSuccess = () => ({type: NEW_FOLDER_SUCCESS})
-const newFolderFailure = (errors) => ({type: NEW_FOLDER_FAILURE, errors})
+const addFolderRequest = () => ({type: ADD_FOLDER_REQUEST})
+const addFolderSuccess = (folder) => ({type: ADD_FOLDER_SUCCESS, folder})
+const addFolderFailure = (errors) => ({type: ADD_FOLDER_FAILURE, errors})
 
 export const createFolder = (folder) => {
   return dispatch => {
@@ -19,14 +19,15 @@ export const createFolder = (folder) => {
       folder
     }
 
-    dispatch(newFolderRequest())
+    dispatch(addFolderRequest())
     api.createFolder(data)
-      .then(() => {
-        dispatch(newFolderSuccess())
+      .then((response) => {
+        const { data } = response
+        dispatch(addFolderSuccess(data.folder))
       })
       .catch((error) => {
         const { data } = error.response
-        dispatch(newFolderFailure(data.errors))
+        dispatch(addFolderFailure(data.errors))
       })
   }
 }
