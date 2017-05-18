@@ -19,8 +19,8 @@ func (ur *userRepository)CheckEmail(email string) (bool) {
 }
 
 func (ur *userRepository)Create(u *domain.User, encryptedPassword string) (error) {
-	row := ur.db.QueryRow("INSERT INTO users(email, encrypted_password, first_name, last_name, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id",
-	  u.Email, encryptedPassword, u.FirstName, u.LastName, u.CreatedAt, u.UpdatedAt)
+	row := ur.db.QueryRow("INSERT INTO users(email, encrypted_password, first_name, last_name, created_at, updated_at) VALUES ($1, $2, $3, $4, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP) RETURNING id",
+	  u.Email, encryptedPassword, u.FirstName, u.LastName)
 
 	if err := row.Scan(&u.Id); err != nil {
 		return err

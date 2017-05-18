@@ -7,10 +7,6 @@ import (
 	"bookmarks/app/usecases"
 )
 
-type Repositories interface {
-	GetUserRepository() domain.UserRepository
-}
-
 type Engine struct {
 	Config     Config
 	Router     http.Handler
@@ -19,7 +15,13 @@ type Engine struct {
 
 type Interactors struct {
 	SessionInteractor usecases.SessionInteractor
-	UserInteractor usecases.UserInteractor
+	UserInteractor    usecases.UserInteractor
+	FolderInteractor  usecases.FolderInteractor
+}
+
+type Repositories interface {
+	GetUserRepository() domain.UserRepository
+	GetFolderRepository() domain.FolderRepository
 }
 
 func (a *Engine) RunServer() {

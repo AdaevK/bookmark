@@ -22,12 +22,18 @@ func createRoutes(r *gin.Engine, f *engine.Engine) {
 func apiV1(r *gin.RouterGroup, f *engine.Engine, endpoint string) {
 	v1 := r.Group(endpoint)
 	{
-		sessionHandler := api_v1.SessionHandler{f.Interactor}
-		v1.POST("/sessions", sessionHandler.Create)
-		v1.DELETE("/sessions", jwtAuth(f.Config.SecretKey), sessionHandler.Delete)
+		sessionsHandler := api_v1.SessionHandler{f.Interactor}
+		v1.POST("/sessions", sessionsHandler.Create)
+		v1.DELETE("/sessions", jwtAuth(f.Config.SecretKey), sessionsHandler.Delete)
 
-		registrationHandler := api_v1.RegistrationsHandler{f.Interactor}
-		v1.POST("/registrations", registrationHandler.Create)
+		registrationsHandler := api_v1.RegistrationsHandler{f.Interactor}
+		v1.POST("/registrations", registrationsHandler.Create)
+
+		folders := v1.Group("/folders", jwtAuth(f.Config.SecretKey))
+		{
+			foldersHandler := api_v1.FoldersHandler{f.Interactor}
+			folders.POST("", foldersHandler.Create)
+		}
 	}
 }
 

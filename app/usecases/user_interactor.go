@@ -1,7 +1,6 @@
 package usecases
 
 import (
-	"time"
 	"gopkg.in/go-playground/validator.v9"
 
 	"bookmarks/app/domain"
@@ -12,7 +11,6 @@ type UserInteractor struct {
 	domain.UserRepository
 }
 
-type Errors map[string]string
 type User struct {
 	Email                string `json:"email" validate:"required,email,unique_user_email"`
 	Password             string `json:"password" validate:"required,eqfield=PasswordConfirmation"`
@@ -25,13 +23,10 @@ type User struct {
 func (interactor *UserInteractor) Registration(u *User) (bool) {
 	re := interactor.Validate.Struct(u)
 	if re == nil {
-		createdAt := time.Now()
 		user := domain.User{
 			Email:     u.Email,
 			FirstName: u.FirstName,
 			LastName:  u.LastName,
-			CreatedAt: createdAt,
-			UpdatedAt: createdAt,
 		}
 		if err := interactor.UserRepository.Create(&user, u.Password); err != nil {
 			panic(err)

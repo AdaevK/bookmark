@@ -19,7 +19,11 @@ const api = {
   },
   signOut: () => {
     return request.delete(apiPath + '/sessions', authHeader())
-  }
+  },
+
+  createFolder: (data) => {
+    return request.post(apiPath + '/folders', data, authHeader())
+  },
 }
 
 export default api

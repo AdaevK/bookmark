@@ -25,6 +25,14 @@ const translationsObject = {
         sign_in_link: 'Войти',
       }
     },
+    folder_form: {
+      fields: {
+        name: 'Название папки',
+      },
+      page: {
+        submit: 'Добавить',
+      }
+    },
     errors: {
       required: 'не может быть пустым',
       email:    'не верный формат',

@@ -22,7 +22,7 @@ const FormGroupWithError = (props) => {
       {errorMessage ?
         (
           <div className={wrapClass}>
-            <span className="help-block">{I18n.t('errors.' + errorMessage)}</span>
+            <span className="help-block text-center">{I18n.t('errors.' + errorMessage)}</span>
           </div>
         ) : null}
     </div>

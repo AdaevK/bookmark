@@ -31,3 +31,7 @@ func NewDatabase(config engine.Database) (engine.Repositories, error) {
 func (r *repositories)GetUserRepository() (domain.UserRepository) {
 	return &userRepository{ r.db }
 }
+
+func (r *repositories)GetFolderRepository() (domain.FolderRepository) {
+	return &folderRepository{ r.db }
+}

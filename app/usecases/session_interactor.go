@@ -2,9 +2,8 @@ package usecases
 
 import (
 	jwt_lib "github.com/dgrijalva/jwt-go"
-	"bookmarks/app/domain"
-	"time"
 	"gopkg.in/go-playground/validator.v9"
+	"bookmarks/app/domain"
 )
 
 type SessionInteractor struct {
@@ -35,7 +34,7 @@ func (interactor *SessionInteractor) Authenticate(session *Session) (string, boo
 			"id":         u.Id,
 			"first_name": u.FirstName,
 			"last_name":  u.LastName,
-			"exp":        time.Now().Add(time.Hour * 1).Unix(),
+			// "exp":        time.Now().Add(time.Hour * 1).Unix(),
 		}
 
 		jwt, err := token.SignedString(interactor.SecretKey)
