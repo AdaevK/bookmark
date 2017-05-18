@@ -24,6 +24,9 @@ const api = {
   createFolder: (data) => {
     return request.post(apiPath + '/folders', data, authHeader())
   },
+  indexFolders: () => {
+    return request.get(apiPath + '/folders', authHeader())
+  },
 }
 
 export default api

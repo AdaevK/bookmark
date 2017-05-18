@@ -15,6 +15,15 @@ type FolderParams struct {
 	Folder usecases.Folder `json:"folder" binding:"required"`
 }
 
+func (fh *FoldersHandler)Index(c *gin.Context) {
+	userId := int64(c.Keys["user_id"].(float64))
+	folders, err := fh.Interactors.FolderInteractor.Folders(userId)
+	if err != nil {
+		panic(err)
+	}
+	c.JSON(http.StatusOK, gin.H{"folders": folders})
+}
+
 func (fh *FoldersHandler)Create(c *gin.Context) {
 	var params FolderParams
 	if err := c.BindJSON(&params); err == nil {

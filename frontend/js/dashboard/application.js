@@ -4,7 +4,6 @@ import { Provider } from 'react-redux'
 import { loadTranslations, setLocale, syncTranslationWithStore } from 'react-redux-i18n'
 
 import { BrowserRouter } from 'react-router-dom'
-import createHistory from 'history/createBrowserHistory'
 
 import translationsObject from './i18n/translations_object'
 

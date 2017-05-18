@@ -32,6 +32,7 @@ func apiV1(r *gin.RouterGroup, f *engine.Engine, endpoint string) {
 		folders := v1.Group("/folders", jwtAuth(f.Config.SecretKey))
 		{
 			foldersHandler := api_v1.FoldersHandler{f.Interactor}
+			folders.GET("", foldersHandler.Index)
 			folders.POST("", foldersHandler.Create)
 		}
 	}
