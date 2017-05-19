@@ -7,6 +7,8 @@ import {
   LOAD_FOLDERS_REQUEST,
   LOAD_FOLDERS_SUCCESS,
   LOAD_FOLDERS_FAILURE,
+
+  DELETE_FOLDER_SUCCESS,
 } from '../constants/action_types'
 
 const addFolderRequest = () => ({type: ADD_FOLDER_REQUEST})
@@ -47,6 +49,20 @@ export const indexFolders = () => {
       .catch((error) => {
         console.log(error)
         dispatch(loadFoldersFailure())
+      })
+  }
+}
+
+const deleteFolderSuccess = (id) => ({type: DELETE_FOLDER_SUCCESS, id: id})
+
+export const deleteFolder = (id) => {
+  return dispatch => {
+    api.deleteFolder(id)
+      .then(() => {
+        dispatch(deleteFolderSuccess(id))
+      })
+      .catch((error) => {
+        console.log(error)
       })
   }
 }

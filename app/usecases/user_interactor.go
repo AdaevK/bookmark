@@ -8,7 +8,11 @@ import (
 
 type UserInteractor struct {
 	Validate *validator.Validate
-	domain.UserRepository
+	userRepository domain.UserRepository
+}
+
+func NewUserInteractor(v *validator.Validate, ur domain.UserRepository) (UserInteractor) {
+	return UserInteractor{v, ur}
 }
 
 type User struct {
@@ -28,7 +32,7 @@ func (interactor *UserInteractor) Registration(u *User) (bool) {
 			FirstName: u.FirstName,
 			LastName:  u.LastName,
 		}
-		if err := interactor.UserRepository.Create(&user, u.Password); err != nil {
+		if err := interactor.userRepository.Create(&user, u.Password); err != nil {
 			panic(err)
 		}
 

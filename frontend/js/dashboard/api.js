@@ -27,6 +27,9 @@ const api = {
   indexFolders: () => {
     return request.get(apiPath + '/folders', authHeader())
   },
+  deleteFolder: (id) => {
+    return request.delete(apiPath + '/folders/' + id, authHeader())
+  }
 }
 
 export default api

@@ -12,7 +12,9 @@ type Folder struct {
 }
 
 type FolderRepository interface {
-	Create(f *Folder) (error)
+	CheckName(name string, userId int64) (bool)
 
+	Create(f *Folder) (error)
 	Folders(userId int64) ([]*Folder, error)
+	DestroyFromUser(id, userId int64) (error)
 }

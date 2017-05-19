@@ -9,6 +9,15 @@ type folderRepository struct {
 	db *sql.DB
 }
 
+func (fr *folderRepository)CheckName(name string, userId int64) (bool) {
+	var result bool
+	if err := fr.db.QueryRow("SELECT EXISTS(SELECT 1 FROM folders WHERE name=$1 AND user_id=$2)", name, userId).Scan(&result); err != nil {
+		panic(err)
+	}
+
+	return !result
+}
+
 func (fr *folderRepository)Create(f *domain.Folder) (error) {
 	row := fr.db.QueryRow("INSERT INTO folders(name, user_id, created_at, updated_at) VALUES ($1, $2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP) RETURNING id",
 	  f.Name, f.UserId)
@@ -37,4 +46,12 @@ func (fr *folderRepository)Folders(userId int64) ([]*domain.Folder, error) {
 		folders = append(folders, folder)
 	}
 	return folders, nil
+}
+
+func (fr *folderRepository)DestroyFromUser(id, userId int64) (error) {
+	_, err := fr.db.Exec("DELETE from folders WHERE id=$1 AND user_id=$2", id, userId)
+	if err != nil {
+		return err
+	}
+	return nil
 }

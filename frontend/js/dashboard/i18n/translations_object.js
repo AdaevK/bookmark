@@ -33,11 +33,15 @@ const translationsObject = {
         submit: 'Добавить',
       }
     },
+    confirmation: {
+      delete_folder: 'Удалить папку?'
+    },
     errors: {
       required: 'не может быть пустым',
       email:    'не верный формат',
       eqfield:  'не совпадает с подтверждением',
       unique_user_email: 'такой email уже существует',
+      unique_folder_name: 'такое название папки уже существует',
       invalid_email_or_password: 'Не верный адрес эл.почты или пароль'
     }
   }

@@ -30,12 +30,16 @@ func NewApplication(configPath, secretPath string) (app *engine.Engine, err erro
 	folderRepository := repo.GetFolderRepository()
 
 	app.Interactor = new(engine.Interactors)
-	app.Interactor.SessionInteractor = usecases.SessionInteractor{app.Config.SecretKey, validate, userRepository}
-	app.Interactor.UserInteractor = usecases.UserInteractor{validate, userRepository}
-	app.Interactor.FolderInteractor = usecases.FolderInteractor{validate, folderRepository}
+	app.Interactor.SessionInteractor = usecases.NewSessionInteractor(app.Config.SecretKey, validate, userRepository)
+	app.Interactor.UserInteractor = usecases.NewUserInteractor(validate, userRepository)
+	app.Interactor.FolderInteractor = usecases.NewFolderInteractor(validate, folderRepository)
 
 	validate.RegisterValidation("unique_user_email", func(fl validator.FieldLevel) (bool) {
 		return userRepository.CheckEmail(fl.Field().String())
+	})
+	validate.RegisterValidation("unique_folder_name", func(fl validator.FieldLevel) (bool) {
+		v, _, _ := fl.GetStructFieldOK()
+		return folderRepository.CheckName(fl.Field().String(), v.Interface().(int64))
 	})
 
 	app.Router = web.NewWebAdapter(app)

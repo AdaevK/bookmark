@@ -5,6 +5,7 @@ import (
 	"bookmarks/app/usecases"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strconv"
 )
 
 type FoldersHandler struct {
@@ -17,10 +18,7 @@ type FolderParams struct {
 
 func (fh *FoldersHandler)Index(c *gin.Context) {
 	userId := int64(c.Keys["user_id"].(float64))
-	folders, err := fh.Interactors.FolderInteractor.Folders(userId)
-	if err != nil {
-		panic(err)
-	}
+	folders := fh.Interactors.FolderInteractor.Folders(userId)
 	c.JSON(http.StatusOK, gin.H{"folders": folders})
 }
 
@@ -35,4 +33,13 @@ func (fh *FoldersHandler)Create(c *gin.Context) {
 			c.JSON(http.StatusUnprocessableEntity, gin.H{ "errors": params.Folder.Errors })
 		}
 	}
+}
+
+func (fh *FoldersHandler)Destroy(c *gin.Context) {
+	id, _ := strconv.ParseInt(c.Param("id"), 10, 64)
+	userId := int64(c.Keys["user_id"].(float64))
+
+	fh.Interactors.FolderInteractor.Destroy(id, userId)
+
+	c.JSON(http.StatusOK, gin.H{})
 }

@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { indexFolders } from '../actions/folders'
+import { indexFolders, deleteFolder } from '../actions/folders'
 
 import DashboardHeader from '../components/dashboard_header'
 import DashboardForm from '../components/dashboard_form'
-import DashboardList from '../components/folders_list'
+import FoldersList from '../components/folders_list'
 
 class Dashboard extends React.Component {
   componentDidMount() {
@@ -14,7 +14,7 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    const { folders, isLoaded } = this.props
+    const { folders, isLoaded, deleteFolder } = this.props
     return(
       <div>
         <div className="">
@@ -27,9 +27,11 @@ class Dashboard extends React.Component {
         </div>
         <div className="row">
           <div className="col-sm-4">
-            <DashboardList
+            <FoldersList
               folders={ folders }
-              isLoaded={ isLoaded }/>
+              isLoaded={ isLoaded }
+              deleteItem={ deleteFolder }
+            />
           </div>
           <div className="col-sm-8">
           </div>
@@ -43,6 +45,7 @@ Dashboard.propTypes = {
   folders:      PropTypes.array.isRequired,
   isLoaded:     PropTypes.bool.isRequired,
   indexFolders: PropTypes.func.isRequired,
+  deleteFolder: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => {
@@ -54,4 +57,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { indexFolders })(Dashboard)
+export default connect(mapStateToProps, { indexFolders, deleteFolder })(Dashboard)

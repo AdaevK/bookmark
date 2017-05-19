@@ -7,9 +7,13 @@ import (
 )
 
 type SessionInteractor struct {
-	SecretKey      []byte
+	secretKey      []byte
 	Validate *validator.Validate
-	UserRepository domain.UserRepository
+	userRepository domain.UserRepository
+}
+
+func NewSessionInteractor(sk []byte, v *validator.Validate, ur domain.UserRepository) (SessionInteractor) {
+	return SessionInteractor{sk, v, ur}
 }
 
 type Session struct {
@@ -23,7 +27,7 @@ func (interactor *SessionInteractor) Authenticate(session *Session) (string, boo
 	session.Errors = make(Errors)
 
 	if ae == nil {
-		u, encPassword, err := interactor.UserRepository.FindByEmailAndGetPassword(session.Email)
+		u, encPassword, err := interactor.userRepository.FindByEmailAndGetPassword(session.Email)
 		if err != nil || *encPassword != session.Password {
 			session.Errors["common"] = "invalid_email_or_password"
 			return "", false
@@ -37,7 +41,7 @@ func (interactor *SessionInteractor) Authenticate(session *Session) (string, boo
 			// "exp":        time.Now().Add(time.Hour * 1).Unix(),
 		}
 
-		jwt, err := token.SignedString(interactor.SecretKey)
+		jwt, err := token.SignedString(interactor.secretKey)
 		if err != nil {
 			panic("Could not generate token")
 		}

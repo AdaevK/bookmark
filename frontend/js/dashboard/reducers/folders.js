@@ -4,6 +4,8 @@ import {
   LOAD_FOLDERS_FAILURE,
 
   ADD_FOLDER_SUCCESS,
+
+  DELETE_FOLDER_SUCCESS,
 } from '../constants/action_types'
 
 const initState = {
@@ -30,10 +32,14 @@ export default (state = initState, action) => {
         isLoaded: false
       }
     case ADD_FOLDER_SUCCESS:
-      const items = [...state.items, action.folder]
       return {
         ...state,
-        items
+        items: [...state.items, action.folder]
+      }
+    case DELETE_FOLDER_SUCCESS:
+      return {
+        ...state,
+        items: state.items.filter(item => item.id != action.id)
       }
     default:
       return state
