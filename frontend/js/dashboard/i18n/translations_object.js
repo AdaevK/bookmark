@@ -31,6 +31,12 @@ const translationsObject = {
       },
       page: {
         submit: 'Добавить',
+        cancel: 'Закрыть'
+      }
+    },
+    modals: {
+      add_folder: {
+        header: 'Добавление папки'
       }
     },
     confirmation: {

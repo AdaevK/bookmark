@@ -3,6 +3,8 @@ const links = {
   registrationPath: "/registration",
 
   dashboardPath: "/dashboard",
+
+  newFolderPath: "/dashboard/folders/new",
 }
 
 export default links
