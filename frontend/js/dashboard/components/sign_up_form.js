@@ -128,8 +128,8 @@ const mapStateToProps = (state) => {
   const { registration } = state
   const { errors, submitting } = registration
   return {
-    errors: errors,
-    submitting: submitting,
+    errors,
+    submitting,
   }
 }
 

@@ -1,10 +1,11 @@
 import api from '../api'
 import {
-  ADD_FOLDER_SUCCESS,
-
   LOAD_FOLDERS_REQUEST,
   LOAD_FOLDERS_SUCCESS,
   LOAD_FOLDERS_FAILURE,
+
+  ADD_FOLDER_SUCCESS,
+  UPDATE_FOLDER_SUCCESS,
 
   DELETE_FOLDER_SUCCESS,
 } from '../constants/action_types'
@@ -17,6 +18,24 @@ export const createFolder = (folder) => {
       .then((response) => {
         const { data } = response
         dispatch(addFolderSuccess(data.folder))
+      })
+  }
+}
+
+export const editFolder = (id) => {
+  return dispatch => {
+    return api.editFolder(id)
+  }
+}
+
+const updateFolderSuccess = (folder) => ({type: UPDATE_FOLDER_SUCCESS, folder})
+
+export const updateFolder = (id, folder) => {
+  return dispatch => {
+    return api.updateFolder(id, { folder })
+      .then((response) => {
+        const { data } = response
+        dispatch(updateFolderSuccess(data.folder))
       })
   }
 }

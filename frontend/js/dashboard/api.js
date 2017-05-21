@@ -12,23 +12,29 @@ const authHeader = () => {
 
 const api = {
   signUp: (data) => {
-    return request.post(apiPath + '/registrations', data)
+    return request.post(`${apiPath}/registrations`, data)
   },
   signIn: (data) => {
-    return request.post(apiPath + '/sessions', data)
+    return request.post(`${apiPath}/sessions`, data)
   },
   signOut: () => {
-    return request.delete(apiPath + '/sessions', authHeader())
+    return request.delete(`${apiPath}/sessions`, authHeader())
   },
 
-  createFolder: (data) => {
-    return request.post(apiPath + '/folders', data, authHeader())
-  },
   indexFolders: () => {
-    return request.get(apiPath + '/folders', authHeader())
+    return request.get(`${apiPath}/folders`, authHeader())
+  },
+  createFolder: (data) => {
+    return request.post(`${apiPath}/folders`, data, authHeader())
+  },
+  editFolder: (id) => {
+    return request.get(`${apiPath}/folders/${id}`, authHeader())
+  },
+  updateFolder: (id, data) => {
+    return request.patch(`${apiPath}/folders/${id}`, data, authHeader())
   },
   deleteFolder: (id) => {
-    return request.delete(apiPath + '/folders/' + id, authHeader())
+    return request.delete(`${apiPath}/folders/${id}`, authHeader())
   }
 }
 

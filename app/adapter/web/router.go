@@ -34,6 +34,8 @@ func apiV1(r *gin.RouterGroup, f *engine.Engine, endpoint string) {
 			foldersHandler := api_v1.FoldersHandler{f.Interactor}
 			folders.GET("", foldersHandler.Index)
 			folders.POST("", foldersHandler.Create)
+			folders.GET("/:id", foldersHandler.Edit)
+			folders.PATCH("/:id", foldersHandler.Update)
 			folders.DELETE("/:id", foldersHandler.Destroy)
 		}
 	}

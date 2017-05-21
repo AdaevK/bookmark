@@ -47,12 +47,49 @@ func (interactor *FolderInteractor)Create(f *Folder) (*domain.Folder, bool) {
 	}
 }
 
+func (interactor *FolderInteractor)GetForEdit(id, userId int64) (*domain.Folder) {
+	folder, err := interactor.folderRepository.FindById(id, userId)
+	if err != nil {
+		panic(err)
+	}
+	return folder
+}
+
 func (interactor *FolderInteractor)Folders(userId int64) ([]*domain.Folder) {
 	folders, err := interactor.folderRepository.Folders(userId)
 	if err != nil {
 		panic(err)
 	}
 	return folders
+}
+
+func (interactor *FolderInteractor)Update(id int64, f *Folder) (*domain.Folder, bool) {
+	fe := interactor.Validate.Struct(f)
+	if fe == nil {
+		folder := domain.Folder {
+			Id:     id,
+			Name:   f.Name,
+			UserId: f.UserId,
+		}
+
+		if err := interactor.folderRepository.Update(&folder); err != nil {
+			panic(err)
+		}
+
+		return &folder, true
+	} else {
+		f.Errors = make(Errors)
+		for _, err := range fe.(validator.ValidationErrors) {
+			switch err.Field() {
+			case "Name":
+				f.Errors["name"] = err.Tag()
+			case "UserId":
+				f.Errors["user_id"] = err.Tag()
+			}
+		}
+
+		return nil, false
+	}
 }
 
 func (interactor *FolderInteractor)Destroy(id, userId int64) {

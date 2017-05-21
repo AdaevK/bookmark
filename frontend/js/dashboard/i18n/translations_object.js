@@ -30,13 +30,15 @@ const translationsObject = {
         name: 'Название папки',
       },
       page: {
-        submit: 'Добавить',
+        new: {
+          header: 'Добавление папки',
+          submit: 'Добавить',
+        },
+        edit: {
+          header: 'Редактирование папки',
+          submit: 'Сохранить',
+        },
         cancel: 'Закрыть'
-      }
-    },
-    modals: {
-      add_folder: {
-        header: 'Добавление папки'
       }
     },
     confirmation: {

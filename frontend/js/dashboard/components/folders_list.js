@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import FolderItem from './folder_item'
 
-import Loader from '../components/loader/loader'
+import Loader from './loader'
 
 const FoldersList = (props) => {
   const { folders, deleteItem } = props

@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const ModalFooter = ({ textSubmit, textCancel, onCancel }) => (
+const ModalFooter = ({ isSubmit, textSubmit, textCancel, onCancel }) => (
   <div className="modal-footer">
     <button
       type="submit"
       className="btn btn-success"
+      disabled={ isSubmit }
     >{ textSubmit }</button>
     <button
       type="button"
@@ -15,7 +16,12 @@ const ModalFooter = ({ textSubmit, textCancel, onCancel }) => (
   </div>
 )
 
+ModalFooter.defaultProps = {
+  isSubmit: false
+}
+
 ModalFooter.propTypes = {
+  isSubmit:   PropTypes.bool,
   textSubmit: PropTypes.string.isRequired,
   textCancel: PropTypes.string.isRequired,
   onCancel:   PropTypes.func.isRequired

@@ -5,8 +5,7 @@ import { I18n } from 'react-redux-i18n'
 
 import { createFolder } from '../actions/folders'
 
-import { Modal, ModalHeader, ModalBody, ModalFooter } from '../components/modal'
-import FormGroupWithError from '../components/form_group_with_error'
+import FolderForm from '../components/folder_form'
 
 class NewFolder extends React.Component {
   constructor(props) {
@@ -24,14 +23,14 @@ class NewFolder extends React.Component {
     this.setState({ folder: { [e.target.name]: e.target.value } })
   }
 
-  handleClose(e) {
+  onClose(e) {
     e.preventDefault()
     const { router } = this.context
 
     router.history.goBack()
   }
 
-  handleSubmit(e) {
+  onSubmit(e) {
     e.preventDefault()
     const { router } = this.context
     const { folder } = this.state
@@ -47,40 +46,21 @@ class NewFolder extends React.Component {
   }
 
   render() {
-    const { errors, isSubmit } = this.state
-    return (
-      <Modal>
-        <form onSubmit={ this.handleSubmit.bind(this) } className="form-horizontal form-modal">
-          <ModalHeader handleClose={ this.handleClose.bind(this) }>
-            { I18n.t('modals.add_folder.header') }
-          </ModalHeader>
-          <ModalBody>
-            <FormGroupWithError errors={ errors } field="name" wrapClass="col-xs-12">
-              <label htmlFor="name">{ I18n.t("folder_form.fields.name") }</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder={ I18n.t("folder_form.fields.name") }
-                value={ this.state.folder.name }
-                onChange={ this.onChange.bind(this) }
-                name="name"
-                disabled={ isSubmit }
-              />
-            </FormGroupWithError>
-          </ModalBody>
-          <ModalFooter
-            textSubmit={ I18n.t("folder_form.page.submit") }
-            textCancel={ I18n.t("folder_form.page.cancel") }
-            onCancel={ this.handleClose.bind(this) }
-          />
-        </form>
-      </Modal>
-    )
+    const { folder, errors, isSubmit } = this.state
+    return (<FolderForm
+        type="new"
+        isSubmit={ isSubmit }
+        errors={ errors }
+        folder={ folder }
+        onSubmit={ this.onSubmit.bind(this) }
+        onCancel={ this.onClose.bind(this) }
+        onChange={ this.onChange.bind(this) }
+      />)
   }
 }
 
 NewFolder.contextTypes = {
-  router:     PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired
 }
 
 NewFolder.propTypes = {

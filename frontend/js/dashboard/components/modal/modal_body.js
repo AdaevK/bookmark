@@ -1,7 +1,11 @@
 import React from 'react'
 
-export default ({ children }) => (
+import Loader from '../loader'
+
+const ModalBody = ({ children }) => (
   <div className="modal-body">
     { children }
   </div>
 )
+
+export default Loader('modal-body')(ModalBody)

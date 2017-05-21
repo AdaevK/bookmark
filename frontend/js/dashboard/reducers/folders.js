@@ -4,6 +4,7 @@ import {
   LOAD_FOLDERS_FAILURE,
 
   ADD_FOLDER_SUCCESS,
+  UPDATE_FOLDER_SUCCESS,
 
   DELETE_FOLDER_SUCCESS,
 } from '../constants/action_types'
@@ -36,6 +37,10 @@ export default (state = initState, action) => {
         ...state,
         items: [...state.items, action.folder]
       }
+    case UPDATE_FOLDER_SUCCESS:
+      const foundIndex = state.items.findIndex(i => i.id === action.folder.id)
+      if (foundIndex >= 0) state.items[foundIndex] = action.folder
+      return state
     case DELETE_FOLDER_SUCCESS:
       return {
         ...state,

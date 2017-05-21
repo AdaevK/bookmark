@@ -10,6 +10,7 @@ import PrivateRoute from '../components/private_route'
 import FoldersList from '../components/folders_list'
 
 import NewFolder from './new_folder'
+import EditFolder from './edit_folder'
 
 class Dashboard extends React.Component {
   componentDidMount() {
@@ -40,6 +41,7 @@ class Dashboard extends React.Component {
         </div>
         <Switch>
           <PrivateRoute path={ links.newFolderPath } component={ NewFolder }/>
+          <PrivateRoute path={ links.editFolderPath() } component={ EditFolder }/>
         </Switch>
       </div>
     )
