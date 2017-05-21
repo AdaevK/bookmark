@@ -4,6 +4,7 @@ import (
 	jwt_lib "github.com/dgrijalva/jwt-go"
 	"gopkg.in/go-playground/validator.v9"
 	"bookmarks/app/domain"
+	"fmt"
 )
 
 type SessionInteractor struct {
@@ -35,9 +36,11 @@ func (interactor *SessionInteractor) Authenticate(session *Session) (string, boo
 
 		token := jwt_lib.New(jwt_lib.GetSigningMethod("HS256"))
 		token.Claims = jwt_lib.MapClaims{
-			"id":         u.Id,
-			"first_name": u.FirstName,
-			"last_name":  u.LastName,
+			"user": map[string]string{
+				"id":         fmt.Sprint(u.Id),
+				"first_name": u.FirstName,
+				"last_name":  u.LastName,
+			},
 			// "exp":        time.Now().Add(time.Hour * 1).Unix(),
 		}
 

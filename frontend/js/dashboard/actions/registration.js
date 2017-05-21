@@ -1,4 +1,4 @@
-import api from '../api'
+import api from '../utils/api'
 import {
   SIGN_UP_REQUEST,
   SIGN_UP_SUCCESS,

@@ -1,4 +1,4 @@
-import api from '../api'
+import api from '../utils/api'
 import {
   LOAD_FOLDERS_REQUEST,
   LOAD_FOLDERS_SUCCESS,

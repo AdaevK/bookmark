@@ -50,7 +50,7 @@ const FolderForm = (props) => {
 }
 
 FolderForm.defaultProps = {
-  isLoaded: true
+  isLoaded: false
 }
 
 FolderForm.propTypes = {

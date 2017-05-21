@@ -1,4 +1,6 @@
-import api from '../api'
+import jwtDecode from 'jwt-decode'
+import api from '../utils/api'
+import setAuthToken from '../utils/set_auth_token'
 import {
   SIGN_IN_REQUEST,
   SIGN_IN_SUCCESS,
@@ -23,8 +25,10 @@ export const login = (email, password) => {
     dispatch(signInRequest())
     api.signIn(data)
       .then((response) => {
-        localStorage.setItem('bookmarksAuthToken', response.data.jwt)
-        dispatch(signInSuccess())
+        const { jwt } = response.data
+        localStorage.setItem('bookmarksAuthToken', jwt)
+        setAuthToken(jwt)
+        dispatch(signInSuccess(jwtDecode(localStorage.bookmarksAuthToken)['user']))
       })
       .catch((error) => {
         console.log(error)
@@ -39,6 +43,7 @@ export const logout = () => {
     api.signOut()
       .then(() => {
         localStorage.removeItem('bookmarksAuthToken')
+        setAuthToken(false)
         dispatch(userSignOut())
       })
       .catch((error) => {

@@ -17,6 +17,7 @@ const Header = (props) => (
             <NavLink to={ links.dashboardPath }>Главная</NavLink>
           </ul>
           <ul className="nav navbar-nav pull-right">
+            <li><a>{ `${props.currentUser.first_name} ${props.currentUser.last_name}` }</a></li>
             <SignOutLink signOut={ props.logout } />
           </ul>
         </div>
@@ -26,13 +27,15 @@ const Header = (props) => (
 )
 
 Header.propTypes = {
+  currentUser:   PropTypes.object,
   authenticated: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = (state) => {
   const { session } = state
-  const { authenticated } = session
+  const { authenticated, currentUser } = session
   return {
+    currentUser:   currentUser,
     authenticated: authenticated
   }
 }

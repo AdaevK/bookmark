@@ -11,7 +11,8 @@ func jwtAuth(secret []byte) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		_, err := request.ParseFromRequest(c.Request, request.OAuth2Extractor, func(token *jwt_lib.Token) (interface{}, error){
 			claims, _ := token.Claims.(jwt_lib.MapClaims)
-			c.Set("user_id", claims["id"])
+			user := claims["user"].(map[string]interface{})
+			c.Set("user_id", user["id"])
 
 			return secret, nil
 		})
