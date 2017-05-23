@@ -33,20 +33,97 @@ $fa-font-path: "~font-awesome/fonts";
   }
 }
 
-ul.folders-list {
-  list-style: none;
-  font-size: 16px;
-  padding: 0;
-  margin: 0;
+.folders-column {
+  ul.folders-list {
+    list-style: none;
+    font-size: 16px;
+    padding: 0;
+    margin: 0;
 
-  li {
-    padding: 10px;
+    li.folder-item {
+      padding: 10px;
+      a, a:hover, a:focus, a:active {
+        color: #333333;
+      }
 
-    > .fa {
-      font-size: 20px;
+      > .fa {
+        font-size: 20px;
+      }
+      > span {
+        margin-left: 10px;
+      }
     }
-    > span {
-      margin-left: 10px;
+  }
+}
+
+.folder-page {
+  .folder-name {
+    padding-bottom: 10px;
+    margin-bottom: 0;
+    border-bottom: 4px solid #f3f3f3;
+
+    > i {
+      margin-right: 10px;
+    }
+  }
+
+  .list-links {
+    font-size: 16px;
+    padding: 0;
+    list-style: none;
+    position: relative;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 8%;
+      width: 4px;
+      background: #f3f3f3;
+      margin-left: -14px;
+    }
+
+    .link {
+      position: relative;
+      padding: 10px 0;
+
+      > i {
+        position: absolute;
+        top: 25px;
+        left: 8%;
+        width: 10px;
+        height: 10px;
+        background: #f3f3f3;
+        margin: 0 0 0 -17px;
+        box-shadow: 0 0 0 4px #f3f3f3;
+        -webkit-font-smoothing: antialiased;
+        border-radius: 50%;
+      }
+
+      > div {
+        position: relative;
+        padding: 10px 15px;
+        margin-left: 12%;
+        background: #f3f3f3;
+
+        &:after {
+          position: absolute;
+          right: 100%;
+          top: 10px;
+          border: solid transparent;
+          content: ' ';
+          height: 0;
+          width: 0;
+          pointer-events: none;
+          border-right-color: #f3f3f3;
+          border-width: 10px;
+        }
+
+        > a {
+          color: #555;
+        }
+      }
     }
   }
 }

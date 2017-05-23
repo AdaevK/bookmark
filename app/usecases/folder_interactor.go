@@ -6,12 +6,13 @@ import (
 )
 
 type FolderInteractor struct {
-	Validate *validator.Validate
+	Validate         *validator.Validate
 	folderRepository domain.FolderRepository
+	linkRepository   domain.LinkRepositroy
 }
 
-func NewFolderInteractor(v *validator.Validate, fr domain.FolderRepository) (FolderInteractor) {
-	return FolderInteractor{v, fr}
+func NewFolderInteractor(v *validator.Validate, fr domain.FolderRepository, lr domain.LinkRepositroy) (FolderInteractor) {
+	return FolderInteractor{v, fr, lr}
 }
 
 type Folder struct {
@@ -47,8 +48,8 @@ func (interactor *FolderInteractor)Create(f *Folder) (*domain.Folder, bool) {
 	}
 }
 
-func (interactor *FolderInteractor)GetForEdit(id, userId int64) (*domain.Folder) {
-	folder, err := interactor.folderRepository.FindById(id, userId)
+func (interactor *FolderInteractor)GetForEdit(id int64) (*domain.Folder) {
+	folder, err := interactor.folderRepository.FindById(id)
 	if err != nil {
 		panic(err)
 	}
@@ -61,6 +62,19 @@ func (interactor *FolderInteractor)Folders(userId int64) ([]*domain.Folder) {
 		panic(err)
 	}
 	return folders
+}
+
+func (interactor *FolderInteractor)Show(id int64) (*domain.Folder) {
+	folder, err := interactor.folderRepository.FindById(id)
+	if err != nil {
+		panic(err)
+	}
+	links, err := interactor.linkRepository.ListByFolder(folder.Id)
+	if err != nil {
+		panic(err)
+	}
+	folder.Links = links
+	return folder
 }
 
 func (interactor *FolderInteractor)Update(id int64, f *Folder) (*domain.Folder, bool) {

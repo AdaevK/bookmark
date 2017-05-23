@@ -29,6 +29,17 @@ func (fh *FoldersHandler)Index(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"folders": folders})
 }
 
+func (fh *FoldersHandler)Show(c *gin.Context) {
+	id, _ := strconv.ParseInt(c.Param("id"), 10, 64)
+	userId, _ := getUserId(c)
+	folder := fh.Interactors.FolderInteractor.Show(id)
+	if folder.UserId == userId {
+		c.JSON(http.StatusOK, gin.H{"folder": folder})
+	} else {
+		c.JSON(http.StatusUnauthorized, gin.H{"errors": "not_authorize"})
+	}
+}
+
 func (fh *FoldersHandler)Create(c *gin.Context) {
 	var params FolderParams
 	if err := c.BindJSON(&params); err == nil {
@@ -45,8 +56,12 @@ func (fh *FoldersHandler)Create(c *gin.Context) {
 func (fh *FoldersHandler)Edit(c *gin.Context) {
 	id, _ := strconv.ParseInt(c.Param("id"), 10, 64)
 	userId, _ := getUserId(c)
-	folder := fh.Interactors.FolderInteractor.GetForEdit(id, userId)
-	c.JSON(http.StatusOK, gin.H{ "folder": folder })
+	folder := fh.Interactors.FolderInteractor.GetForEdit(id)
+	if folder.UserId == userId {
+		c.JSON(http.StatusOK, gin.H{ "folder": folder })
+	} else {
+		c.JSON(http.StatusUnauthorized, gin.H{"errors": "not_authorize"})
+	}
 }
 
 func (fh *FoldersHandler)Update(c *gin.Context) {

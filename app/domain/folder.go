@@ -9,10 +9,12 @@ type Folder struct {
 	UserId    int64
 	CreatedAt time.Time
 	UpdatedAt time.Time
+
+	Links     []*Link    `json:"links"`
 }
 
 type FolderRepository interface {
-	FindById(id, userId int64) (*Folder, error)
+	FindById(id int64) (*Folder, error)
 	Folders(userId int64) ([]*Folder, error)
 
 	Create(f *Folder) (error)

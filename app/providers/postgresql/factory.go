@@ -35,3 +35,7 @@ func (r *repositories)GetUserRepository() (domain.UserRepository) {
 func (r *repositories)GetFolderRepository() (domain.FolderRepository) {
 	return &folderRepository{ r.db }
 }
+
+func (r *repositories)GetLinkRepository() (domain.LinkRepositroy) {
+	return &linkRepository{ r.db }
+}

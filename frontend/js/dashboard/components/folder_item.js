@@ -18,7 +18,7 @@ const FolderItem = ({ folder, deleteItem }) => {
     <li className="folder-item">
       <i className="fa fa-folder"/>
       <span className="name">
-        { folder.name }
+        <Link to={ links.showFolderPath(folder.id) }>{ folder.name }</Link>
         <span className="pull-right">
           <div className="btn-group btn-group-sm">
             <Link className="btn btn-default"

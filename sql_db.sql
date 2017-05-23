@@ -30,7 +30,25 @@ CREATE TABLE folders (
 ALTER TABLE public.folders
   OWNER TO defo;
 
-CREATE INDEX index_folders_on_name
+CREATE INDEX index_folders_on_user_id
   ON public.folders
   USING btree
-  (name COLLATE pg_catalog."default");
+  (user_id);
+
+CREATE TABLE links (
+  id serial NOT NULL,
+  name character varying NOT NULL DEFAULT ''::character varying,
+  url character varying NOT NULL DEFAULT ''::character varying,
+  folder_id integer REFERENCES folders(id),
+  created_at timestamp without time zone NOT NULL,
+  updated_at timestamp without time zone NOT NULL,
+  CONSTRAINT links_pkey PRIMARY KEY (id)
+) WITH (OIDS=FALSE);
+
+ALTER TABLE public.links
+  OWNER TO defo;
+
+CREATE INDEX index_links_on_folder_id
+  ON public.links
+  USING btree
+  (folder_id);

@@ -4,6 +4,10 @@ import {
   LOAD_FOLDERS_SUCCESS,
   LOAD_FOLDERS_FAILURE,
 
+  LOAD_FOLDER_REQUEST,
+  LOAD_FOLDER_SUCCESS,
+  LOAD_FOLDER_FAILURE,
+
   ADD_FOLDER_SUCCESS,
   UPDATE_FOLDER_SUCCESS,
 
@@ -18,6 +22,25 @@ export const createFolder = (folder) => {
       .then((response) => {
         const { data } = response
         dispatch(addFolderSuccess(data.folder))
+      })
+  }
+}
+
+const loadFolderRequest = () => ({type: LOAD_FOLDER_REQUEST})
+const loadFolderSuccess = (folder) => ({type: LOAD_FOLDER_SUCCESS, folder})
+const loadFolderFailure = () => ({type: LOAD_FOLDER_FAILURE})
+
+export const showFolder = (id) => {
+  return dispatch => {
+    dispatch(loadFolderRequest(id))
+    api.showFolder(id)
+      .then((response) => {
+        const { data } = response
+        dispatch(loadFolderSuccess(data.folder))
+      })
+      .catch((error) => {
+        console.log(error)
+        dispatch(loadFolderFailure())
       })
   }
 }

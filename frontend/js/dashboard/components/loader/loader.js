@@ -6,6 +6,8 @@ const Loader = (props) => (WrappedComponent) => {
   return class Loader extends React.Component {
     render() {
       const { isLoaded, error } = this.props
+      let isError
+      if(error) isError = true
       if (isLoaded) {
         return (
           <div className="height-cssloader">
@@ -18,7 +20,7 @@ const Loader = (props) => (WrappedComponent) => {
             </div>
           </div>
         )
-      } else if (error !== undefined && error !== null) {
+      } else if (isError) {
         return (
           <div className="text-center">
             <div className="error-badge">

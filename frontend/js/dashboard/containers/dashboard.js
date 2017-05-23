@@ -9,6 +9,7 @@ import { indexFolders, deleteFolder } from '../actions/folders'
 import PrivateRoute from '../components/private_route'
 import FoldersList from '../components/folders_list'
 
+import ShowFolder from './show_folder'
 import NewFolder from './new_folder'
 import EditFolder from './edit_folder'
 
@@ -22,7 +23,7 @@ class Dashboard extends React.Component {
     return(
       <div className="dashboard">
         <div className="row">
-          <div className="col-sm-4">
+          <div className="col-sm-4 folders-column">
             <div className="folders-action">
               <Link className="btn btn-success" to={ links.newFolderPath }>
                 <i className="fa fa-plus"/>
@@ -36,7 +37,10 @@ class Dashboard extends React.Component {
               deleteItem={ deleteFolder }
             />
           </div>
-          <div className="col-sm-8">
+          <div className="col-sm-8 folder-page">
+            <Switch>
+              <PrivateRoute path={ links.showFolderPath() } component={ ShowFolder } />
+            </Switch>
           </div>
         </div>
         <Switch>

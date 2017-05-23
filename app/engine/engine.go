@@ -22,6 +22,7 @@ type Interactors struct {
 type Repositories interface {
 	GetUserRepository() domain.UserRepository
 	GetFolderRepository() domain.FolderRepository
+	GetLinkRepository() domain.LinkRepositroy
 }
 
 func (a *Engine) RunServer() {

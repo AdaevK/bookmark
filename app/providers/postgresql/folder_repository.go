@@ -9,14 +9,15 @@ type folderRepository struct {
 	db *sql.DB
 }
 
-func (fr *folderRepository)FindById(id, userId int64) (*domain.Folder, error) {
+func (fr *folderRepository)FindById(id int64) (*domain.Folder, error) {
 	var f domain.Folder
 
-	row := fr.db.QueryRow("SELECT name FROM folders WHERE id=$1 AND user_id=$2", id, userId)
+	row := fr.db.QueryRow("SELECT name, user_id FROM folders WHERE id=$1", id)
 
-	if err := row.Scan(&f.Name); err != nil {
+	if err := row.Scan(&f.Name, &f.UserId); err != nil {
 		return nil, err
 	}
+	f.Id = id
 
 	return &f, nil
 }

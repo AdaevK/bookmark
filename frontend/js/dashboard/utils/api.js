@@ -19,8 +19,11 @@ const api = {
   createFolder: (data) => {
     return request.post(`${apiPath}/folders`, data)
   },
-  editFolder: (id) => {
+  showFolder: (id) => {
     return request.get(`${apiPath}/folders/${id}`)
+  },
+  editFolder: (id) => {
+    return request.get(`${apiPath}/folders/${id}/edit`)
   },
   updateFolder: (id, data) => {
     return request.patch(`${apiPath}/folders/${id}`, data)
