@@ -5,9 +5,9 @@ import { connect } from 'react-redux'
 import { logout } from '../actions/sessions'
 import links from '../constants/links'
 
-import Nav from './nav'
-import NavLink from './nav_link'
-import SignOutLink from './sign_out_link'
+import Nav from '../components/nav'
+import NavLink from '../components/nav_link'
+import SignOutLink from '../components/sign_out_link'
 
 const Header = (props) => (
   <Nav isBrandLink={ props.authenticated }>

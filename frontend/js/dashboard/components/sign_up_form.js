@@ -1,12 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
-import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { I18n } from 'react-redux-i18n'
 
 import links from '../constants/links'
-import { signUp } from '../actions/registration'
 
 import FormGroupWithError from './form_group_with_error'
 import CommonError from './common_error'
@@ -14,7 +11,6 @@ import CommonError from './common_error'
 class SignUpForm extends React.Component {
   handleSubmit(e) {
     e.preventDefault()
-    const history  = this.props.history
 
     const user = {
       email:                 this.refs.email.value,
@@ -24,7 +20,7 @@ class SignUpForm extends React.Component {
       last_name:             this.refs.lastName.value
     }
 
-    this.props.signUp(user, history)
+    this.props.signUp(user)
   }
 
   render() {
@@ -124,13 +120,4 @@ SignUpForm.propTypes = {
   signUp:     PropTypes.func.isRequired
 }
 
-const mapStateToProps = (state) => {
-  const { registration } = state
-  const { errors, submitting } = registration
-  return {
-    errors,
-    submitting,
-  }
-}
-
-export default withRouter(connect(mapStateToProps, { signUp })(SignUpForm))
+export default SignUpForm

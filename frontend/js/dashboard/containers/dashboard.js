@@ -6,7 +6,7 @@ import links from '../constants/links'
 
 import { indexFolders, deleteFolder } from '../actions/folders'
 
-import PrivateRoute from '../components/private_route'
+import PrivateRoute from './private_route'
 import FoldersList from '../components/folders_list'
 
 import ShowFolder from './show_folder'

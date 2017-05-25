@@ -5,9 +5,6 @@ import { I18n } from 'react-redux-i18n'
 import links from '../constants/links'
 
 const FolderItem = ({ folder, deleteItem }) => {
-  const handleEdit = (id) => {
-  }
-
   const handleDelete = (id) => {
     if(confirm(I18n.t('confirmation.delete_folder'))) {
       deleteItem(id)

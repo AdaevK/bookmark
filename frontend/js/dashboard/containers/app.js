@@ -1,9 +1,9 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 
-import Header from '../components/header'
-import PrivateRoute from '../components/private_route'
-import NotSignedInRoute from '../components/not_signed_in_route'
+import Header from './header'
+import PrivateRoute from './private_route'
+import NotSignedInRoute from './not_signed_in_route'
 import links from '../constants/links'
 
 import Dashboard from './dashboard'
