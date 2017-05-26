@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import { showFolder } from '../actions/folders'
+import { deleteLinkFromFolder } from '../actions/links'
 
 import Folder from '../components/folder'
 
@@ -25,7 +26,7 @@ class ShowFolder extends React.Component {
 
   render() {
     const { id } = this.props.match.params
-    const { links, isLoaded, loadError } = this.props
+    const { links, isLoaded, loadError, deleteLinkFromFolder } = this.props
     const { name } = this.props.folder
     return (
       <Folder
@@ -34,6 +35,7 @@ class ShowFolder extends React.Component {
         pages={ links }
         error={ loadError }
         isLoaded={ isLoaded }
+        deleteLink={ deleteLinkFromFolder }
       />
     )
   }
@@ -46,6 +48,8 @@ ShowFolder.propTypes = {
   links:     PropTypes.array,
   isLoaded:  PropTypes.bool,
   loadError: PropTypes.bool,
+
+  deleteLinkFromFolder: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => {
@@ -60,4 +64,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { showFolder })(ShowFolder)
+export default connect(mapStateToProps, { showFolder, deleteLinkFromFolder })(ShowFolder)

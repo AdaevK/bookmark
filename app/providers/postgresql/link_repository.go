@@ -38,3 +38,11 @@ func (lr *linkRepository)Create(l *domain.Link) (error) {
 
 	return nil
 }
+
+func (lr *linkRepository)DestroyFromFolder(id, folderId int64) (error) {
+	_, err := lr.db.Exec("DELETE FROM links WHERE id=$1 AND folder_id=$2", id, folderId)
+	if err != nil {
+		return err
+	}
+	return nil
+}

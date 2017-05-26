@@ -15,4 +15,6 @@ type LinkRepositroy interface {
 	ListByFolder(folderId int64) ([]*Link, error)
 
 	Create(f *Link) (error)
+
+	DestroyFromFolder(id, folderId int64) (error)
 }

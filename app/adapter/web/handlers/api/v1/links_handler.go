@@ -29,3 +29,12 @@ func (lh *LinksHandler)Create(c *gin.Context) {
 		}
 	}
 }
+
+func (lh *LinksHandler)Destroy(c *gin.Context) {
+	folderId, _ := strconv.ParseInt(c.Param("folder_id"), 10, 64)
+	id, _ := strconv.ParseInt(c.Param("id"), 10, 64)
+
+	lh.Interactors.LinkInteractor.Destroy(id, folderId)
+
+	c.JSON(http.StatusOK, gin.H{})
+}

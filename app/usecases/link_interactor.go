@@ -44,3 +44,9 @@ func (interactor *LinkInteractor)Create(l *Link) (*domain.Link, bool) {
 		return nil, false
 	}
 }
+
+func (interactor *LinkInteractor)Destroy(id, folderId int64) {
+	if err := interactor.linkRepository.DestroyFromFolder(id, folderId); err != nil {
+		panic(err)
+	}
+}

@@ -6,7 +6,10 @@ import links from '../constants/links'
 import Loader from './loader'
 import ListLinks from './list_links'
 
-const Folder = ({folderId, name, pages}) => {
+const Folder = ({ folderId, name, pages, deleteLink }) => {
+  const deleteLinkFunc = (id) => {
+    return deleteLink(folderId, id)
+  }
   return (
     <div>
       <h2 className="folder-name">
@@ -16,15 +19,16 @@ const Folder = ({folderId, name, pages}) => {
           <i className="fa fa-plus"/> Добавить страницу
         </Link>
       </h2>
-      <ListLinks links={ pages }/>
+      <ListLinks links={ pages } deleteItem={ deleteLinkFunc }/>
     </div>
   )
 }
 
 Folder.propTypes = {
-  folderId: PropTypes.string.isRequired,
-  name:     PropTypes.string.isRequired,
-  pages:    PropTypes.array.isRequired,
+  folderId:   PropTypes.string.isRequired,
+  name:       PropTypes.string.isRequired,
+  pages:      PropTypes.array.isRequired,
+  deleteLink: PropTypes.func.isRequired,
 }
 
 export default Loader('folder')(Folder)

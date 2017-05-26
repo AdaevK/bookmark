@@ -72,7 +72,7 @@ func (fr *folderRepository)Update(f *domain.Folder) (error) {
 }
 
 func (fr *folderRepository)DestroyFromUser(id, userId int64) (error) {
-	_, err := fr.db.Exec("DELETE from folders WHERE id=$1 AND user_id=$2", id, userId)
+	_, err := fr.db.Exec("DELETE FROM folders WHERE id=$1 AND user_id=$2", id, userId)
 	if err != nil {
 		return err
 	}

@@ -3,7 +3,8 @@ import {
   LOAD_FOLDER_SUCCESS,
   LOAD_FOLDER_FAILURE,
 
-  ADD_LINK_SUCCESS
+  ADD_LINK_SUCCESS,
+  DELETE_LINK_SUCCESS
 } from '../constants/action_types'
 
 const initState = {
@@ -44,6 +45,11 @@ export default (state = initState, action) => {
       return {
         ...state,
         links: [...state.links, action.link]
+      }
+    case DELETE_LINK_SUCCESS:
+      return {
+        ...state,
+        links: state.links.filter(item => item.id != action.id)
       }
     default:
       return state

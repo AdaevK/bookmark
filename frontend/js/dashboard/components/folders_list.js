@@ -5,8 +5,7 @@ import FolderItem from './folder_item'
 
 import Loader from './loader'
 
-const FoldersList = (props) => {
-  const { folders, deleteItem } = props
+const FoldersList = ({ folders, deleteItem }) => {
   return (
     <ul className="folders-list">{
       folders.sort((a, b) => {

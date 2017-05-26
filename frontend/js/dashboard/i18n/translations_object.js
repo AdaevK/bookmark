@@ -52,7 +52,8 @@ const translationsObject = {
       }
     },
     confirmation: {
-      delete_folder: 'Удалить папку?'
+      delete_folder: 'Удалить папку?',
+      delete_link: 'Удалить страницу?'
     },
     errors: {
       required: 'не может быть пустым',
