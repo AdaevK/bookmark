@@ -2,6 +2,8 @@ import {
   LOAD_FOLDER_REQUEST,
   LOAD_FOLDER_SUCCESS,
   LOAD_FOLDER_FAILURE,
+
+  ADD_LINK_SUCCESS
 } from '../constants/action_types'
 
 const initState = {
@@ -37,6 +39,11 @@ export default (state = initState, action) => {
         ...state,
         isLoaded: false,
         loadError: true
+      }
+    case ADD_LINK_SUCCESS:
+      return {
+        ...state,
+        links: [...state.links, action.link]
       }
     default:
       return state

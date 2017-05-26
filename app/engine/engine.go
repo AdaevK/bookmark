@@ -17,6 +17,7 @@ type Interactors struct {
 	SessionInteractor usecases.SessionInteractor
 	UserInteractor    usecases.UserInteractor
 	FolderInteractor  usecases.FolderInteractor
+	LinkInteractor    usecases.LinkInteractor
 }
 
 type Repositories interface {

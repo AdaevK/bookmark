@@ -38,6 +38,12 @@ func apiV1(r *gin.RouterGroup, f *engine.Engine, endpoint string) {
 			folders.GET("/:id/edit", foldersHandler.Edit)
 			folders.PATCH("/:id", foldersHandler.Update)
 			folders.DELETE("/:id", foldersHandler.Destroy)
+
+			linksHandler := api_v1.LinksHandler{ f.Interactor }
+			links := folders.Group("/:folder_id/links")
+			{
+				links.POST("", linksHandler.Create)
+			}
 		}
 	}
 }

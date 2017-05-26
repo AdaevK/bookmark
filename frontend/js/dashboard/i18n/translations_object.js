@@ -41,6 +41,16 @@ const translationsObject = {
         cancel: 'Закрыть'
       }
     },
+    link_form: {
+      fields: {
+        url: 'Ссылка на страницу'
+      },
+      page: {
+        header: 'Добавить страницу',
+        submit: 'Добавить',
+        cancel: 'Закрыть'
+      }
+    },
     confirmation: {
       delete_folder: 'Удалить папку?'
     },

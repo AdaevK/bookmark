@@ -27,3 +27,14 @@ func (lr *linkRepository)ListByFolder(folderId int64) ([]*domain.Link, error) {
 	}
 	return links, nil
 }
+
+func (lr *linkRepository)Create(l *domain.Link) (error) {
+	row := lr.db.QueryRow("INSERT INTO links(url, folder_id, created_at, updated_at) VALUES ($1, $2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP) RETURNING id",
+	       l.Url, l.FolderId)
+
+	if err := row.Scan(&l.Id); err != nil {
+		return err
+	}
+
+	return nil
+}

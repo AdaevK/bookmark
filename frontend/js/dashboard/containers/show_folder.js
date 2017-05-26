@@ -24,12 +24,14 @@ class ShowFolder extends React.Component {
   }
 
   render() {
+    const { id } = this.props.match.params
     const { links, isLoaded, loadError } = this.props
     const { name } = this.props.folder
     return (
       <Folder
+        folderId={ id }
         name={ name }
-        links={ links }
+        pages={ links }
         error={ loadError }
         isLoaded={ isLoaded }
       />

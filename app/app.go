@@ -32,8 +32,9 @@ func NewApplication(configPath, secretPath string) (app *engine.Engine, err erro
 
 	app.Interactor = new(engine.Interactors)
 	app.Interactor.SessionInteractor = usecases.NewSessionInteractor(app.Config.SecretKey, validate, userRepository)
-	app.Interactor.UserInteractor = usecases.NewUserInteractor(validate, userRepository)
-	app.Interactor.FolderInteractor = usecases.NewFolderInteractor(validate, folderRepository, linkRepository)
+	app.Interactor.UserInteractor    = usecases.NewUserInteractor(validate, userRepository)
+	app.Interactor.FolderInteractor  = usecases.NewFolderInteractor(validate, folderRepository, linkRepository)
+	app.Interactor.LinkInteractor    = usecases.NewLinkInteractor(validate, linkRepository)
 
 	validate.RegisterValidation("unique_user_email", func(fl validator.FieldLevel) (bool) {
 		return userRepository.CheckEmail(fl.Field().String())

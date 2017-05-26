@@ -30,6 +30,10 @@ const api = {
   },
   deleteFolder: (id) => {
     return request.delete(`${apiPath}/folders/${id}`)
+  },
+
+  createLinkToFolder: (folderId, data) => {
+    return request.post(`${apiPath}/folders/${folderId}/links`, data)
   }
 }
 

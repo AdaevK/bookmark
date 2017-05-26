@@ -12,6 +12,11 @@ const links = {
   showFolderPath: (id) => {
     if (!id) id = ':id'
     return `/dashboard/folders/${id}`
+  },
+
+  newFolderLinkPath: (folderId) => {
+    if (!folderId) folderId = ':folder_id'
+    return `/dashboard/folders/${folderId}/links/new`
   }
 }
 
