@@ -18,7 +18,7 @@ func jwtAuth(secret []byte) gin.HandlerFunc {
 		})
 
 		if err != nil {
-			c.JSON(http.StatusUnauthorized, gin.H{"errors": "not_authorize"})
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "not_authorized"})
 			c.Abort()
 			return
 		}

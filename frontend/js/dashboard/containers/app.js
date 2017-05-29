@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom'
 import Header from './header'
 import PrivateRoute from './private_route'
 import NotSignedInRoute from './not_signed_in_route'
+import NotificationManager from './notification_manager'
 import links from '../constants/links'
 
 import Dashboard from './dashboard'
@@ -28,6 +29,7 @@ const App = (props) => (
         </div>
       </div>
     </div>
+    <NotificationManager/>
   </div>
 )
 

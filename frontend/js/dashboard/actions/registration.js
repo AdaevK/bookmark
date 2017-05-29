@@ -5,6 +5,8 @@ import {
   SIGN_UP_FAILURE
 } from '../constants/action_types'
 import links from '../constants/links'
+import { notification } from './notifications'
+import handleError from '../utils/handle_error'
 
 const signUpRequest = () => ({type: SIGN_UP_REQUEST})
 const signUpSuccess = () => ({type: SIGN_UP_SUCCESS})
@@ -20,11 +22,11 @@ export const signUp = (user, history) => {
     api.signUp(data)
       .then(() => {
         dispatch(signUpSuccess())
+        dispatch(notification.success({ content: 'registration.create', i18n: true }))
         history.push(links.loginPath)
       })
-      .catch((error) => {
-        const { data } = error.response
-        dispatch(signUpFailure(data.errors))
-      })
+      .catch(handleError(dispatch, (errors) => {
+        dispatch(signUpFailure(errors))
+      }))
   }
 }

@@ -13,6 +13,8 @@ import {
 
   DELETE_FOLDER_SUCCESS,
 } from '../constants/action_types'
+import { notification } from './notifications'
+import handleError from '../utils/handle_error'
 
 const addFolderSuccess = (folder) => ({type: ADD_FOLDER_SUCCESS, folder})
 
@@ -22,6 +24,7 @@ export const createFolder = (folder) => {
       .then((response) => {
         const { data } = response
         dispatch(addFolderSuccess(data.folder))
+        dispatch(notification.success({ content: 'folders.create', i18n: true }))
       })
   }
 }
@@ -38,10 +41,9 @@ export const showFolder = (id) => {
         const { data } = response
         dispatch(loadFolderSuccess(data.folder))
       })
-      .catch((error) => {
-        console.log(error)
+      .catch(handleError(dispatch, (errors) => {
         dispatch(loadFolderFailure())
-      })
+      }))
   }
 }
 
@@ -59,6 +61,7 @@ export const updateFolder = (id, folder) => {
       .then((response) => {
         const { data } = response
         dispatch(updateFolderSuccess(data.folder))
+        dispatch(notification.success({ content: 'folders.update', i18n: true }))
       })
   }
 }
@@ -75,10 +78,9 @@ export const indexFolders = () => {
         const { data } = response
         dispatch(loadFoldersSuccess(data.folders))
       })
-      .catch((error) => {
-        console.log(error)
+      .catch(handleError(dispatch, (errors) => {
         dispatch(loadFoldersFailure())
-      })
+      }))
   }
 }
 
@@ -89,9 +91,8 @@ export const deleteFolder = (id) => {
     api.deleteFolder(id)
       .then(() => {
         dispatch(deleteFolderSuccess(id))
+        dispatch(notification.success({ content: 'folders.destroy', i18n: true }))
       })
-      .catch((error) => {
-        console.log(error)
-      })
+      .catch(handleError(dispatch))
   }
 }

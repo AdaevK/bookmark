@@ -6,11 +6,11 @@ const links = {
 
   newFolderPath: "/dashboard/folders/new",
   editFolderPath: (id) => {
-    if (!id) id = ':id'
+    if (!id) id = ':id(\\d+)'
     return `/dashboard/folders/${id}/edit`
   },
   showFolderPath: (id) => {
-    if (!id) id = ':id'
+    if (!id) id = ':id(\\d+)'
     return `/dashboard/folders/${id}`
   },
 

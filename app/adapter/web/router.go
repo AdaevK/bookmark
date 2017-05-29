@@ -63,7 +63,7 @@ func landingRouters(r *gin.Engine, f *engine.Engine, path string) {
 
 func NoRoute(c *gin.Context) {
 	message := gin.H{
-		"errors": "Not Found",
+		"error": "not_found",
 	}
 	switch c.ContentType() {
 	case gin.MIMEJSON:

@@ -7,6 +7,8 @@ import {
   SIGN_IN_FAILURE,
   USER_SIGN_OUT
 } from '../constants/action_types'
+import { notification } from './notifications'
+import handleError from '../utils/handle_error'
 
 const signInRequest = () => ({type: SIGN_IN_REQUEST})
 export const signInSuccess = (currentUser) => ({type: SIGN_IN_SUCCESS, currentUser})
@@ -29,12 +31,11 @@ export const login = (email, password) => {
         localStorage.setItem('bookmarksAuthToken', jwt)
         setAuthToken(jwt)
         dispatch(signInSuccess(jwtDecode(localStorage.bookmarksAuthToken)['user']))
+        dispatch(notification.success({ content: 'session.sign_in', i18n: true }))
       })
-      .catch((error) => {
-        console.log(error)
-        const { data } = error.response
-        dispatch(signInFailure(data.errors))
-      })
+      .catch(handleError(dispatch, (errors) => {
+        dispatch(signInFailure(errors))
+      }))
   }
 }
 
@@ -45,9 +46,8 @@ export const logout = () => {
         localStorage.removeItem('bookmarksAuthToken')
         setAuthToken(false)
         dispatch(userSignOut())
+        dispatch(notification.success({ content: 'session.sign_out', i18n: true }))
       })
-      .catch((error) => {
-        console.log(error)
-      })
+      .catch(handleError(dispatch))
   }
 }

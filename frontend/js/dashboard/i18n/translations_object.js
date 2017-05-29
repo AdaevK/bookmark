@@ -56,12 +56,38 @@ const translationsObject = {
       delete_link: 'Удалить страницу?'
     },
     errors: {
+      not_authorized: 'Необходимо авторизоваться',
+      not_found: 'Объект не найден',
       required: 'не может быть пустым',
       email:    'не верный формат',
       eqfield:  'не совпадает с подтверждением',
       unique_user_email: 'такой email уже существует',
       unique_folder_name: 'такое название папки уже существует',
       invalid_email_or_password: 'Не верный адрес эл.почты или пароль'
+    },
+    notifications: {
+      title: {
+        success: 'Оповещение',
+        info: 'Оповещение',
+        warning: 'Предупреждение',
+        error: 'Ошибка',
+      },
+      session: {
+        sign_in: 'Вход выполнен',
+        sign_out: 'Выход выполнен'
+      },
+      registration: {
+        create: 'Регистрация успешно выполнена'
+      },
+      folders: {
+        create: 'Папка успешно добавлена',
+        update: 'Папка успешно обновлена',
+        destroy: 'Папка успешно удалена'
+      },
+      links: {
+        create: 'Страница успешно добавлена',
+        destroy: 'Страница успешно удалена'
+      }
     }
   }
 }

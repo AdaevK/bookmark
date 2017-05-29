@@ -18,8 +18,8 @@ const FolderForm = (props) => {
   } = props
   return (
     <Modal>
-      <form onSubmit={ onSubmit.bind(this) } className="form-horizontal form-modal">
-        <ModalHeader handleClose={ onCancel.bind(this) }>
+      <form onSubmit={ onSubmit } className="form-horizontal form-modal">
+        <ModalHeader handleClose={ onCancel }>
           { I18n.t(`folder_form.page.${type}.header`) }
         </ModalHeader>
         <ModalBody isLoaded={ isLoaded }>
@@ -42,7 +42,7 @@ const FolderForm = (props) => {
           isSubmit={ isSubmit || isLoaded }
           textSubmit={ I18n.t(`folder_form.page.${type}.submit`) }
           textCancel={ I18n.t("folder_form.page.cancel") }
-          onCancel={ onCancel.bind(this) }
+          onCancel={ onCancel }
         />
       </form>
     </Modal>
